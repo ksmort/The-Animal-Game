@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">The Animal Game</string>
+    <string name="text_title">The Animal Game</string>
+    <string name="quit">quit</string>
+    <string name="action_settings">Settings</string>
+    <string name="rules">Rules</string>
+    <string name="start">Start</string>
+    <string name="player_name">Player name:</string>
+    <string name="num_of_players">Number of players:</string>
+    <string name="num_players_text">0</string>
+    <string name="player_one">Player 1</string>
+    <string name="add_player">Add player</string>
+    <string name="playerName_text">playername</string>
+    <string name="points">Points:</string>
+    <string name="points_no_colon">Points</string>
+    <string name="numPoints_text">0</string>
+    <string name="letter_text">A</string>
+    <string name="animalName_text">enter animal name</string>
+    <string name="verify">Verify</string>
+    <string name="pass">pass</string>
+    <string name="back">back</string>
+    <string name="new_game">new game</string>
+    <string name="next_letter">next letter</string>
+    <string name="high_scores">high scores</string>
+    <string name="cancel">Cancel</string>
+    <string name="quit_game_message">Are you sure you want to quit the game?</string>
+    <string name="yes">Yes</string>
+    <string name="quit_game_dialog">Quit Game Alert</string>
+    <string name="animal_list">Animal List</string>
+    <string name="add_animal">Add Animal</string>
+    <string name="update_animal">Update Animal</string>
+    <string name="delete_animal">Delete Animal</string>
+    <string name="find_animal">Find Animal</string>
+    <string name="default_animal_name">Give me a name!</string>
+    <string name="default_fun_fact">Give me a fun fact!</string>
+    <string name="no_animals_to_display">No animals to display!</string>
+    <string name="add_animal_error_message">Animal already in database!</string>
+    <string name="update_animal_name_already_used">Name is already in use!</string>
+    <string name="missing_mandatory_parameters">Please enter an animal name.</string>
+    <string name="load_database_error">Error populating database.</string>
+    <string name="default_animal_picture">Animal picture</string>
+    <string name="delete_animal_error_message">Error deleting animal.</string>
+    <string name="update_animal_error_message">Error updating animal.</string>
+    <string name="invalid_animal_for_letter">This animal is invalid for the given letter!</string>
+    <string name="animal_not_found">Animal not found.</string>
+    <string name="animal_found">Animal found.</string>
+    <string name="animal_already_played">Animal already played.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+
+
+</resources>

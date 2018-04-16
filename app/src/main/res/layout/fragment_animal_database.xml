@@ -1,0 +1,50 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.animalgame.fragment.AnimalDatabaseFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/addAnimalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="goToAddAnimalScreen"
+            android:text="@string/add_animal" />
+
+        <Button
+            android:id="@+id/findAnimalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/find_animal" />
+
+        <ScrollView
+            android:id="@+id/animalListScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="357dp">
+
+            <LinearLayout
+                android:id="@+id/animalListLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/goBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:onClick="goToStartGameScreen"
+            android:text="@string/back" />
+
+    </LinearLayout>
+</FrameLayout>

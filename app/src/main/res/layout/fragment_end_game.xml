@@ -1,0 +1,99 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.animalgame.activity.AnimalMainActivity"
+    android:background="#ffd0fffa">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/points_no_colon"
+        android:id="@+id/points_text"
+        android:layout_gravity="center_horizontal|top"
+        android:textSize="48sp"
+        android:layout_marginTop="86dp"
+        android:textColor="#ff1f00ff" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="184dp"
+        android:id="@+id/scroll_scroll"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/pointsScroll_text"
+            android:textSize="24sp"
+            android:textColor="#ff1f00ff" />
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game"
+        android:id="@+id/newGame_button"
+        android:layout_gravity="start|center_vertical"
+        android:onClick="newGame"
+        android:layout_marginTop="100dp"
+        android:textColor="#ff1f00ff"
+        android:textSize="16sp"
+        android:background="@mipmap/button_animal"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_letter"
+        android:id="@+id/nextLetter_button"
+        android:layout_gravity="center"
+        android:onClick="getNextLetter"
+        android:layout_marginTop="100dp"
+        android:textSize="16sp"
+        android:textColor="#ff1f00ff"
+        android:background="@mipmap/button_animal"
+        android:paddingLeft="15dp"
+        android:paddingTop="30dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="30dp"
+        android:layout_marginStart="9.5dp"
+        android:layout_marginLeft="9.5dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quit"
+        android:id="@+id/endQuit_button"
+        android:layout_gravity="end|center_vertical"
+        android:onClick="goBackToStartScreen"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginTop="100dp"
+        android:textColor="#ff1f00ff"
+        android:textSize="16sp"
+        android:background="@mipmap/button_animal"
+        android:paddingLeft="30dp"
+        android:paddingTop="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="30dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/high_scores"
+        android:id="@+id/highScores_button"
+        android:layout_gravity="center_horizontal|bottom"
+        android:onClick="displayHighScores"
+        android:textColor="#ff1f00ff"
+        android:textSize="16sp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@mipmap/button_animal" />
+
+</FrameLayout>
