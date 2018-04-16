@@ -15,19 +15,51 @@
             android:id="@+id/addAnimalButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.10"
+            android:background="@mipmap/button_animal"
             android:onClick="goToAddAnimalScreen"
-            android:text="@string/add_animal" />
+            android:text="@string/add_animal"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/findAnimalEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.10"
+            android:ems="10"
+            android:hint="@string/default_find_animal_text"
+            android:inputType="textPersonName"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/findAnimalButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/find_animal" />
+            android:layout_weight="0.10"
+            android:background="@mipmap/button_animal"
+            android:onClick="findAnimal"
+            android:text="@string/find_animal"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/refreshButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.10"
+            android:onClick="refreshAnimalList"
+            android:text="@string/refresh"
+            android:background="@mipmap/button_animal"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
 
         <ScrollView
             android:id="@+id/animalListScrollView"
             android:layout_width="match_parent"
-            android:layout_height="357dp">
+            android:layout_height="357dp"
+            android:layout_weight="0.50">
 
             <LinearLayout
                 android:id="@+id/animalListLinearLayout"
@@ -43,8 +75,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_weight="0.10"
+            android:background="@mipmap/button_animal"
             android:onClick="goToStartGameScreen"
-            android:text="@string/back" />
+            android:text="@string/back"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
 
     </LinearLayout>
 </FrameLayout>

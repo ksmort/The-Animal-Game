@@ -49,12 +49,12 @@ public class AnimalEditFormFragment extends Fragment {
             }
         });
 
-        TextView funFactEditText = frameLayout.findViewById(R.id.funFactEditText);
+        final TextView funFactEditText = frameLayout.findViewById(R.id.funFactEditText);
         funFactEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    AnimalController.hideKeyboard(getActivity(), v);
+                    AnimalController.hideKeyboard(getActivity(), funFactEditText);
                 }
             }
         });

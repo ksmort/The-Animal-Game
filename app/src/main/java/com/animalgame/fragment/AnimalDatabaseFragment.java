@@ -8,25 +8,29 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.animalgame.database.AnimalDatabaseAdapter;
+import com.animalgame.theanimalgame.AnimalController;
 import com.animalgame.theanimalgame.R;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class AnimalDatabaseFragment extends Fragment {
-    private static final int TEXT_SIZE = 30;
+    private static final int TEXT_SIZE = 20;
     AnimalDatabaseListener animalDatabaseListener;
 
     /*Interface StartListener. */
     public interface AnimalDatabaseListener {
         void goToAddAnimalScreen(View v);
         void goToStartGameScreen(View v);
+        void findAnimal(View v);
+        void refreshAnimalList(View v);
     }
     public AnimalDatabaseFragment() {
         // Required empty public constructor
@@ -43,6 +47,16 @@ public class AnimalDatabaseFragment extends Fragment {
         LinearLayout animalListLinearLayout = animalListScrollView.findViewById(R.id.animalListLinearLayout);
         AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(getActivity());
         List<HashMap<String, String>> animalList = databaseAdapter.getAnimalList();
+
+        EditText findAnimalEditText = frameLayout.findViewById(R.id.findAnimalEditText);
+        findAnimalEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    AnimalController.hideKeyboard(getActivity(), v);
+                }
+            }
+        });
 
         if (animalList.size() > 0) {
             for (HashMap<String, String> animal : animalList) {

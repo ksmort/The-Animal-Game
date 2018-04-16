@@ -167,7 +167,7 @@ public class AnimalController {
     public static void hideKeyboard(Activity activity, View view) {
         try {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (Exception e) {
             Toast toast = Toast.makeText(activity, KEYBOARD_ERROR, Toast.LENGTH_SHORT);
             toast.show();

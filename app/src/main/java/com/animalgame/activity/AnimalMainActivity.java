@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 
@@ -43,6 +47,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least two players.";
     private static final int FIRST_PLAYER_INDEX = 0;
     private static final int NO_LETTERS = 0;
+    private static final int TEXT_SIZE = 20;
     private AnimalController animalController;
     AnimalDatabaseAdapter databaseAdapter;
 
@@ -86,6 +91,57 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         }
     }
 
+    @Override
+    public void findAnimal(View v) {
+        EditText findAnimalEditText = findViewById(R.id.findAnimalEditText);
+        String findAnimalName = findAnimalEditText.getText().toString();
+
+        AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(this);
+        List<HashMap<String, String>> animalList = databaseAdapter.getAnimalListByName(findAnimalName);
+        populateAnimalLinearLayout(animalList);
+    }
+
+    private void populateAnimalLinearLayout(List<HashMap<String, String>> animalList) {
+        LinearLayout animalListLinearLayout = findViewById(R.id.animalListLinearLayout);
+        animalListLinearLayout.removeAllViewsInLayout();
+        if (animalList.size() > 0) {
+            for (HashMap<String, String> animal : animalList) {
+                TextView animalTextView = new TextView(this);
+                final String animalName = animal.get("name");
+                animalTextView.setText(animalName);
+                animalTextView.setTextSize(TEXT_SIZE);
+
+                animalTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AnimalEditFormFragment animalEditFormFragment = new AnimalEditFormFragment();
+
+                        Bundle args = new Bundle();
+                        args.putString("clickEvent", "updateAnimal");
+                        args.putString("animalName", animalName);
+                        animalEditFormFragment.setArguments(args);
+
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frag_container, animalEditFormFragment);
+                        transaction.commit();
+                    }
+
+                });
+                animalListLinearLayout.addView(animalTextView);
+            }
+        } else {
+            TextView noAnimalTextView = new TextView(this);
+            noAnimalTextView.setText(R.string.no_animals_to_display);
+            noAnimalTextView.setTextSize(TEXT_SIZE);
+            animalListLinearLayout.addView(noAnimalTextView);
+        }
+    }
+    @Override
+    public void refreshAnimalList(View v) {
+        AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(this);
+        List<HashMap<String, String>> animalList = databaseAdapter.getAnimalList();
+        populateAnimalLinearLayout(animalList);
+    }
     //----------------------------------------------------------------------------------------------
     /*Switches to PlayerFragment. */
     private void switchPlayers() {

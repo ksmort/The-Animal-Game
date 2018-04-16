@@ -99,6 +99,42 @@ public class AnimalDatabaseAdapter {
 
     }
 
+    public ArrayList<HashMap<String, String>> getAnimalListByName(String findString) {
+        //Open connection to read only
+        ArrayList<HashMap<String, String>> animalList = new ArrayList<>();
+
+        try {
+            if (findString != null && !findString.isEmpty()) {
+                SQLiteDatabase db = mDbHelper.getReadableDatabase();
+                String selectQuery = "SELECT  " +
+                        Animal.KEY_ID + "," +
+                        Animal.KEY_animalName +
+                        " FROM " + Animal.TABLE +
+                        " WHERE UPPER(" + Animal.KEY_animalName + ") LIKE ?" +
+                        " ORDER BY " + Animal.KEY_animalName + " COLLATE NOCASE ASC";
+
+                Cursor cursor = db.rawQuery(selectQuery, new String[]{"%" + findString.trim().toUpperCase() + "%"});
+                // looping through all rows and adding to list
+
+                if (cursor.moveToFirst()) {
+                    do {
+                        HashMap<String, String> animal = new HashMap<>();
+                        animal.put("id", cursor.getString(cursor.getColumnIndex(Animal.KEY_ID)));
+                        animal.put("name", cursor.getString(cursor.getColumnIndex(Animal.KEY_animalName)));
+                        animalList.add(animal);
+
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
+                db.close();
+            }
+        } catch (Exception e) {
+            //animal list is null
+            new ArrayList<>();
+        }
+        return animalList;
+    }
+
     public ArrayList<HashMap<String, String>> getAnimalList() {
         //Open connection to read only
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -108,7 +144,6 @@ public class AnimalDatabaseAdapter {
                 " FROM " + Animal.TABLE +
                 " ORDER BY " + Animal.KEY_animalName + " COLLATE NOCASE ASC";
 
-        //Student student = new Student();
         ArrayList<HashMap<String, String>> animalList = new ArrayList<>();
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -137,11 +172,11 @@ public class AnimalDatabaseAdapter {
                 Animal.KEY_fact +
                 " FROM " + Animal.TABLE
                 + " WHERE " +
-                Animal.KEY_animalName + "='" + animalName + "'";// It's a good practice to use parameter ?, instead of concatenate string
+                Animal.KEY_animalName + "=?";// It's a good practice to use parameter ?, instead of concatenate string
 
         Animal animal = new Animal();
 
-        Cursor cursor = db.rawQuery(selectQuery, null );
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{ animalName } );
 
         if (cursor.moveToFirst()) {
             do {
@@ -162,9 +197,9 @@ public class AnimalDatabaseAdapter {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  EXISTS (SELECT * FROM " +
                 Animal.TABLE + " WHERE " + Animal.KEY_animalName +
-                "='" + animalName + "' LIMIT 1)";
+                "=? LIMIT 1)";
         try {
-            Cursor cursor = db.rawQuery(selectQuery, null );
+            Cursor cursor = db.rawQuery(selectQuery, new String[] { animalName } );
             if (cursor.moveToFirst()) {
                 if (cursor.getInt(0) == 1) {
                     cursor.close();
