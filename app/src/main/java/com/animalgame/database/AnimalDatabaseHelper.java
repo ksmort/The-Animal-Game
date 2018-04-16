@@ -18,7 +18,7 @@ public class AnimalDatabaseHelper extends SQLiteOpenHelper {
     //version number to upgrade database version
     //each time if you Add, Edit table, you need to change the
     //version number.
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String FILENAME = "AnimalDatabase.txt";
     private static final String DB_NAME = "animal.db";
    private final Context mContext;
@@ -39,7 +39,7 @@ public class AnimalDatabaseHelper extends SQLiteOpenHelper {
                 "ON CONFLICT FAIL)";
 
         db.execSQL(CREATE_TABLE_ANIMAL);
-
+        populateDatabase(db, FILENAME);
     }
 
     @Override

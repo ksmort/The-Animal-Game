@@ -26,6 +26,7 @@
     <string name="quit_game_message">Are you sure you want to quit the game?</string>
     <string name="yes">Yes</string>
     <string name="quit_game_dialog">Quit Game Alert</string>
+    <string name="delete_animal_dialog">Delete Animal Alert</string>
     <string name="animal_list">Animal List</string>
     <string name="add_animal">Add Animal</string>
     <string name="update_animal">Update Animal</string>
@@ -39,6 +40,7 @@
     <string name="missing_mandatory_parameters">Please enter an animal name.</string>
     <string name="load_database_error">Error populating database.</string>
     <string name="default_animal_picture">Animal picture</string>
+    <string name="delete_animal_message">Are you sure you want to delete this animal?</string>
     <string name="delete_animal_error_message">Error deleting animal.</string>
     <string name="update_animal_error_message">Error updating animal.</string>
     <string name="invalid_animal_for_letter">This animal is invalid for the given letter!</string>

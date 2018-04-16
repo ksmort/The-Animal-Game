@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.animalgame.animal.Animal;
 import com.animalgame.database.AnimalDatabaseAdapter;
+import com.animalgame.dialogFragment.DeleteAnimalDialogFragment;
 import com.animalgame.fragment.AnimalDatabaseFragment;
 import com.animalgame.fragment.AnimalEditFormFragment;
 import com.animalgame.player.Player;
@@ -35,7 +36,8 @@ import java.util.Vector;
 
 public class AnimalMainActivity extends FragmentActivity implements StartFragment.StartListener, PlayerFragment.PlayerListener,
         EndGameFragment.EndGameListener, GoBackToStartScreenDialogFragment.GoBackToStartScreenDialogListener,
-        AnimalDatabaseFragment.AnimalDatabaseListener, AnimalEditFormFragment.AnimalEditFormListener {
+        AnimalDatabaseFragment.AnimalDatabaseListener, AnimalEditFormFragment.AnimalEditFormListener,
+        DeleteAnimalDialogFragment.DeleteAnimalDialogListener {
     private static final String EMPTY_PLAYER_NAME = "";
     private static final String HIGH_SCORE_FILENAME = "HighScores.txt";
     private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least two players.";
@@ -52,7 +54,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         setContentView(R.layout.activity_animal_main);
 
         databaseAdapter = new AnimalDatabaseAdapter(this);
-        goToStartFrag();
+        goToStartGameFrag();
     }
 
     @Override
@@ -69,7 +71,19 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         animalController.getGameTimer().cancel();
         animalController.resetVariables();
         animalController.resetPlayedAnimals();
-        goToStartFrag();
+        goToStartGameFrag();
+    }
+
+    @Override
+    public void onDeleteAnimalDialogPositiveClick(DialogFragment dialog) {
+        Animal animal = new Animal();
+        TextView animalIdTextView = findViewById(R.id.animalIdTextView);
+        animal.animal_ID = Integer.parseInt(animalIdTextView.getText().toString());
+
+        long animalId = databaseAdapter.deleteAnimal(this, animal.animal_ID);
+        if (animalId > 0) {
+            goToAnimalDatabaseFrag();
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -115,7 +129,12 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         transaction.commit();
     }
     /*Switches to StartFragment. */
-    private void goToStartFrag() {
+    @Override
+    public void goToStartGameScreen(View v) {
+        goToStartGameFrag();
+    }
+
+    private void goToStartGameFrag() {
         animalController.resetVariables();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         StartFragment startFragment = new StartFragment();
@@ -181,11 +200,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     //Presses "Rules". DialogFragment pops up with rules.
     @Override
     public void readRules(View v) {
-        openRules();
-    }
-
-    /*Open the fragment containing rules. */
-    private void openRules() {
         RulesDialogFragment frag = new RulesDialogFragment();
         frag.show(getFragmentManager(), "RulesFragment");
     }
@@ -224,6 +238,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         }
     }
 
+    @Override
     public void pass(View v) {
         //sets the pass boolean to true
         animalController.passPlayer();
@@ -238,7 +253,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         animalController.getGameTimer().cancel();
         animalController.resetVariables();
         animalController.resetPlayedAnimals();
-        goToStartFrag();
+        goToStartGameFrag();
     }
 
     @Override
@@ -250,12 +265,15 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
 
     @Override
     public void goToAnimalDatabaseScreen(View v) {
+        goToAnimalDatabaseFrag();
+    }
+
+    private void goToAnimalDatabaseFrag() {
         AnimalDatabaseFragment animalDatabaseFragment = new AnimalDatabaseFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frag_container, animalDatabaseFragment);
         transaction.commit();
     }
-
     @Override
     public void goToAddAnimalScreen(View v) {
         AnimalEditFormFragment animalEditFormFragment = new AnimalEditFormFragment();
@@ -316,19 +334,8 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
 
     @Override
     public void deleteAnimal(View v) {
-        Animal animal = new Animal();
-        TextView animalIdTextView = findViewById(R.id.animalIdTextView);
-        animal.animal_ID = Integer.parseInt(animalIdTextView.getText().toString());
-
-        long animalId = databaseAdapter.deleteAnimal(this, animal.animal_ID);
-        if (animalId > 0) {
-            goToAnimalDatabaseScreen(v);
-        }
-    }
-
-    @Override
-    public void goToStartGameScreen(View v) {
-        goToStartFrag();
+        DeleteAnimalDialogFragment deleteAnimalDialogFragment = new DeleteAnimalDialogFragment();
+        deleteAnimalDialogFragment.show(getFragmentManager(), "DeleteAnimalDialogFragment");
     }
 
 

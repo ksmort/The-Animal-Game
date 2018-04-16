@@ -11,10 +11,6 @@ import android.widget.Toast;
 import com.animalgame.player.Player;
 import com.animalgame.timer.TimerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Random;
 import java.util.Vector;
 
@@ -26,7 +22,6 @@ public class AnimalController {
     private static final int COUNTDOWN_TIME = 60000;
     private static final int COUNTDOWN_DENOMINATOR = 1000;
 
-    public static final String NO_ANIMAL = "no_animal";
     private static final int NO_LETTERS = 0;
     private static final int FIRST_PLAYER_INDEX = 0;
     private static final int MINIMUM_PLAYER_AMOUNT = 2;
@@ -37,29 +32,15 @@ public class AnimalController {
     private static int playerIndex;
     private Vector<String> playedAnimals;
     private static Vector<Player> players;
-    private final Vector<String> allAnimals;
 
     public AnimalController() {
         availableLetters = ALL_LETTERS;
         AnimalController.animalLetter = ' ';
         AnimalController.playerIndex = 0;
-        allAnimals = new Vector<>();
         AnimalController.players = new Vector<>();
         playedAnimals = new Vector<>();
         gameTimer = null;
     }
-
-//    public void addAnimalsFromFile(Context c) throws IOException {
-//        String line;
-//
-//        InputStream is = c.getResources().getAssets().open(FILENAME);
-//        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-//
-//        while ((line=br.readLine())!=null){
-//            allAnimals.add(line);
-//        }
-//        br.close();
-//    }
 
     public void resetVariables() {
         AnimalController.players.clear();
@@ -82,29 +63,6 @@ public class AnimalController {
     public static Vector<Player> getPlayerVector() {
         return AnimalController.players;
     }
-
-
-//    public String findAnimal(String animal) {
-//        return findAnimal(allAnimals, animal, 0, allAnimals.size()).trim();
-//    }
-//
-//    private String findAnimal(Vector<String> array, String value, int left, int right){
-//        if (left > right) {
-//            return NO_ANIMAL;
-//        }
-//        int middle = (left + right) / 2;
-//
-//        if (array.get(middle).compareToIgnoreCase(value) == 0) {
-//            return array.get(middle);
-//        }
-//        else if (array.get(middle).compareToIgnoreCase(value) > 0) {
-//            return findAnimal(array, value, left, middle - 1);
-//        }
-//        else {
-//            return findAnimal(array, value, middle + 1, right);
-//        }
-//    }
-
 
     //Gets random letter
     public void pickLetter() {
