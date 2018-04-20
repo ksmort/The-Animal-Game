@@ -80,6 +80,10 @@ public class EndGameFragment extends Fragment {
             endGamePlayers.remove(playerIndex);
         }
         pointsScrollTextView.setText(stringBuilder.toString());
+
+        TextView playedLettersTextView = gameLayout.findViewById(R.id.playedLettersTextView);
+        playedLettersTextView.setText(AnimalController.getPlayedLetters());
+
         return gameLayout;
     }
 

@@ -29,6 +29,7 @@ public class AnimalController {
 
     private static char animalLetter;
     private String availableLetters;
+    private static String playedLetters;
     private static int playerIndex;
     private Vector<String> playedAnimals;
     private static Vector<Player> players;
@@ -36,6 +37,7 @@ public class AnimalController {
     public AnimalController() {
         availableLetters = ALL_LETTERS;
         AnimalController.animalLetter = ' ';
+        playedLetters = "";
         AnimalController.playerIndex = 0;
         AnimalController.players = new Vector<>();
         playedAnimals = new Vector<>();
@@ -46,34 +48,43 @@ public class AnimalController {
         AnimalController.players.clear();
         AnimalController.playerIndex = 0;
         resetAvailableLetters();
+        AnimalController.playedLetters = "";
     }
+
     //Resets the letters available.  Use when length of string = 0, or reset game has been pressed.
     private void resetAvailableLetters() {
         availableLetters = AnimalController.ALL_LETTERS;
     }
 
-    public static Player getPlayer (){
+    public static Player getPlayer() {
 
         //otherwise, return player
         return AnimalController.players.get(AnimalController.playerIndex);
     }
+
     public static char getLetter() {
         return AnimalController.animalLetter;
     }
+
     public static Vector<Player> getPlayerVector() {
         return AnimalController.players;
     }
 
     //Gets random letter
     public void pickLetter() {
-        if (availableLetters.length() <= NO_LETTERS){
+        if (availableLetters.length() <= NO_LETTERS) {
             resetAvailableLetters();
         }
         Random randomGenerator = new Random();
-        int randNum = randomGenerator.nextInt(availableLetters.length()-1);
-        AnimalController.animalLetter = availableLetters.charAt(randNum);
+        int randNum = randomGenerator.nextInt(availableLetters.length() - 1);
+        char newLetter = availableLetters.charAt(randNum);
+        AnimalController.animalLetter = newLetter;
+
+        //prepend new letter to played letters
+        AnimalController.playedLetters = newLetter + " " + AnimalController.playedLetters;
         //remove the char from available letters
-        availableLetters = availableLetters.replace(String.valueOf(AnimalController.animalLetter),EMPTY_LETTER);
+        availableLetters = availableLetters.replace(String.valueOf(newLetter), EMPTY_LETTER);
+
     }
 
     public void startNewRound() {
@@ -82,10 +93,11 @@ public class AnimalController {
         playedAnimals.clear();
 
         //reset pass variable
-        for (int i = AnimalController.players.size()-1; i >= 0; i--){
+        for (int i = AnimalController.players.size() - 1; i >= 0; i--) {
             AnimalController.players.get(i).setPass(false);
         }
     }
+
     public void resetPlayedAnimals() {
         playedAnimals.clear();
     }
@@ -96,7 +108,7 @@ public class AnimalController {
 
     public void incrementPlayerIndex() {
         AnimalController.playerIndex++;
-        if (AnimalController.playerIndex >= AnimalController.players.size()){
+        if (AnimalController.playerIndex >= AnimalController.players.size()) {
             AnimalController.playerIndex = FIRST_PLAYER_INDEX;
         }
     }
@@ -141,8 +153,8 @@ public class AnimalController {
     }
 
     public boolean checkAnimalAlreadyPlayed(String animal) {
-        for (String s : playedAnimals){
-            if (s.equalsIgnoreCase(animal)){
+        for (String s : playedAnimals) {
+            if (s.equalsIgnoreCase(animal)) {
                 return true;
             }
         }
@@ -164,6 +176,10 @@ public class AnimalController {
         }
     }
 
+    public Vector<String> getPlayedAnimals() {
+        return playedAnimals;
+    }
+
     public static void hideKeyboard(Activity activity, View view) {
         try {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -172,6 +188,10 @@ public class AnimalController {
             Toast toast = Toast.makeText(activity, KEYBOARD_ERROR, Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    public static String getPlayedLetters() {
+        return playedLetters;
     }
 
 }

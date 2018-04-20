@@ -96,4 +96,33 @@
         android:paddingRight="15dp"
         android:background="@mipmap/button_animal" />
 
+    <HorizontalScrollView
+        android:id="@+id/playedAnimalsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+
+        <LinearLayout
+            android:id="@+id/playedAnimalsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/playedLettersTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#ff1f00ff"
+                android:textSize="36sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/playedLettersLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/played_letters_label"
+        android:textColor="#ff1f00ff" />
+
 </FrameLayout>

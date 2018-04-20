@@ -66,6 +66,8 @@ public class PlayerFragment extends Fragment {
 
         FrameLayout gameLayout = (FrameLayout) inflater.inflate(R.layout.fragment_player, container, false);
 
+        Bundle b = getArguments();
+
         TextView pointsTextView = gameLayout.findViewById(R.id.numPoints_text);
         pointsTextView.setText(String.valueOf(player.getPoints()));
         TextView playerNameTextView = gameLayout.findViewById(R.id.playerName_text);
@@ -73,6 +75,21 @@ public class PlayerFragment extends Fragment {
         TextView letterTextView = gameLayout.findViewById(R.id.letter_text);
         letterTextView.setText(String.valueOf(currentLetter));
         AnimalController.setPlayerCountdownTimer(getActivity(), gameLayout);
+
+        //get the played animal list and add them to the playedAnimalsScrollLayout
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (b != null && b.containsKey("playedAnimals")) {
+            String[] playedAnimals = b.getStringArray("playedAnimals");
+            if (playedAnimals != null) {
+                for (String animal : playedAnimals) {
+                    stringBuilder.append(animal);
+                    stringBuilder.append("\n");
+                }
+                TextView playedAnimalsScrollTextView = gameLayout.findViewById(R.id.playedAnimalsScrollTextView);
+                playedAnimalsScrollTextView.setText(stringBuilder.toString());
+            }
+        }
 
         //have keyboard hide when click off it
         TextView animalTextView = gameLayout.findViewById(R.id.animalName_text);

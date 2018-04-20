@@ -49,6 +49,10 @@
     <string name="animal_already_played">Animal already played.</string>
     <string name="default_find_animal_text">Enter an animal to search for...</string>
     <string name="refresh">Refresh</string>
+    <string name="pass_message">Are you sure you want to pass?</string>
+    <string name="pass_alert_title">Pass Alert</string>
+    <string name="played_animals_label">Played Animals</string>
+    <string name="played_letters_label">Played Letters</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

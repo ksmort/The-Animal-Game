@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.animalgame.animal.Animal;
 import com.animalgame.database.AnimalDatabaseAdapter;
 import com.animalgame.dialogFragment.DeleteAnimalDialogFragment;
+import com.animalgame.dialogFragment.PassDialogFragment;
 import com.animalgame.fragment.AnimalDatabaseFragment;
 import com.animalgame.fragment.AnimalEditFormFragment;
 import com.animalgame.player.Player;
@@ -41,7 +42,7 @@ import java.util.Vector;
 public class AnimalMainActivity extends FragmentActivity implements StartFragment.StartListener, PlayerFragment.PlayerListener,
         EndGameFragment.EndGameListener, GoBackToStartScreenDialogFragment.GoBackToStartScreenDialogListener,
         AnimalDatabaseFragment.AnimalDatabaseListener, AnimalEditFormFragment.AnimalEditFormListener,
-        DeleteAnimalDialogFragment.DeleteAnimalDialogListener {
+        DeleteAnimalDialogFragment.DeleteAnimalDialogListener, PassDialogFragment.PassDialogListener {
     private static final String EMPTY_PLAYER_NAME = "";
     private static final String HIGH_SCORE_FILENAME = "HighScores.txt";
     private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least two players.";
@@ -74,7 +75,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     public void onGoBackToStartScreenDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
         animalController.getGameTimer().cancel();
-        animalController.resetVariables();
         animalController.resetPlayedAnimals();
         goToStartGameFrag();
     }
@@ -153,8 +153,12 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         }
 //==================================================================================================
         else {
+
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             PlayerFragment gameScreenFrag = new PlayerFragment();
+            Bundle args = new Bundle();
+            args.putStringArray("playedAnimals", animalController.getPlayedAnimals().toArray(new String[0]));
+            gameScreenFrag.setArguments(args);
             transaction.replace(R.id.frag_container, gameScreenFrag);
             transaction.commit();
         }
@@ -297,6 +301,15 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     @Override
     public void pass(View v) {
         //sets the pass boolean to true
+//        animalController.passPlayer();
+//        animalController.getGameTimer().cancel();
+//        switchPlayers();
+        PassDialogFragment fragment = new PassDialogFragment();
+        fragment.show(getFragmentManager(), "PassDialogFragment");
+    }
+
+    @Override
+    public void passDialogPositiveClick(DialogFragment dialog) {
         animalController.passPlayer();
         animalController.getGameTimer().cancel();
         switchPlayers();
@@ -307,7 +320,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     public void newGame(View v) {
         //clear all the players and go back to th start fragment
         animalController.getGameTimer().cancel();
-        animalController.resetVariables();
         animalController.resetPlayedAnimals();
         goToStartGameFrag();
     }
