@@ -24,7 +24,7 @@ public class AnimalController {
 
     private static final int NO_LETTERS = 0;
     private static final int FIRST_PLAYER_INDEX = 0;
-    private static final int MINIMUM_PLAYER_AMOUNT = 2;
+    private static final int MINIMUM_PLAYER_AMOUNT = 1;
     private static CountDownTimer gameTimer;
 
     private static char animalLetter;
