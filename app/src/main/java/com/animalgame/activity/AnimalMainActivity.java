@@ -45,7 +45,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         DeleteAnimalDialogFragment.DeleteAnimalDialogListener, PassDialogFragment.PassDialogListener {
     private static final String EMPTY_PLAYER_NAME = "";
     private static final String HIGH_SCORE_FILENAME = "HighScores.txt";
-    private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least two players.";
+    private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least one player.";
     private static final int FIRST_PLAYER_INDEX = 0;
     private static final int NO_LETTERS = 0;
     private static final int TEXT_SIZE = 20;
