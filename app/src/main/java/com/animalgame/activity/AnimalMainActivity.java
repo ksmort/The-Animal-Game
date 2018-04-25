@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +16,7 @@ import com.animalgame.animal.Animal;
 import com.animalgame.database.AnimalDatabaseAdapter;
 import com.animalgame.dialogFragment.DeleteAnimalDialogFragment;
 import com.animalgame.dialogFragment.PassDialogFragment;
+import com.animalgame.dialogFragment.SwitchPlayerDialogFragment;
 import com.animalgame.fragment.AnimalDatabaseFragment;
 import com.animalgame.fragment.AnimalEditFormFragment;
 import com.animalgame.player.Player;
@@ -42,7 +43,8 @@ import java.util.Vector;
 public class AnimalMainActivity extends FragmentActivity implements StartFragment.StartListener, PlayerFragment.PlayerListener,
         EndGameFragment.EndGameListener, GoBackToStartScreenDialogFragment.GoBackToStartScreenDialogListener,
         AnimalDatabaseFragment.AnimalDatabaseListener, AnimalEditFormFragment.AnimalEditFormListener,
-        DeleteAnimalDialogFragment.DeleteAnimalDialogListener, PassDialogFragment.PassDialogListener {
+        DeleteAnimalDialogFragment.DeleteAnimalDialogListener, PassDialogFragment.PassDialogListener,
+        SwitchPlayerDialogFragment.SwitchPlayerDialogListener {
     private static final String EMPTY_PLAYER_NAME = "";
     private static final String HIGH_SCORE_FILENAME = "HighScores.txt";
     private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least one player.";
@@ -91,6 +93,14 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         }
     }
 
+    @Override
+    public void onSwitchPlayerDialogPositiveClick(DialogFragment dialogFragment, boolean pass) {
+        if (pass) {
+            final Button passButton = findViewById(R.id.pass_button);
+            passButton.performClick();
+        }
+        switchPlayers();
+    }
     @Override
     public void findAnimal(View v) {
         EditText findAnimalEditText = findViewById(R.id.findAnimalEditText);
@@ -293,7 +303,15 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
                 toast = Toast.makeText(this, R.string.animal_found, Toast.LENGTH_SHORT);
                 toast.show();
                 animalController.getGameTimer().cancel();
-                switchPlayers();
+
+                SwitchPlayerDialogFragment switchPlayerDialogFragment = new SwitchPlayerDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("animalName", animal);
+                switchPlayerDialogFragment.setArguments(args);
+
+                switchPlayerDialogFragment.show(getFragmentManager(), "SwitchPlayerDialogFragment");
+
+                //switchPlayers();
             }
         }
     }

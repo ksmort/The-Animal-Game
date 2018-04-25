@@ -59,35 +59,37 @@ public class AnimalEditFormFragment extends Fragment {
             }
         });
 
-        Object clickEvent = b.get("clickEvent");
-        if (clickEvent != null) {
-            if (clickEvent.equals("updateAnimal")) {
-                //remove add button
-                Button addButton = frameLayout.findViewById(R.id.addAnimalButton);
-                addButton.setVisibility(View.GONE);
+        if (b != null && b.containsKey("clickEvent")) {
+            Object clickEvent = b.get("clickEvent");
+            if (clickEvent != null) {
+                if (clickEvent.equals("updateAnimal")) {
+                    //remove add button
+                    Button addButton = frameLayout.findViewById(R.id.addAnimalButton);
+                    addButton.setVisibility(View.GONE);
 
-                Object animalName = b.get("animalName");
+                    Object animalName = b.get("animalName");
 
-                if (animalName != null) {
-                    //get animal from database
-                    AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(getActivity());
-                    Animal animal = databaseAdapter.getAnimalByName(animalName.toString());
+                    if (animalName != null) {
+                        //get animal from database
+                        AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(getActivity());
+                        Animal animal = databaseAdapter.getAnimalByName(animalName.toString());
 
-                    animalIdTextView.setText(String.valueOf(animal.animal_ID));
-                    animalNameEditText.setText(animal.animalName);
-                    funFactEditText.setText(animal.fact);
+                        animalIdTextView.setText(String.valueOf(animal.animal_ID));
+                        animalNameEditText.setText(animal.animalName);
+                        funFactEditText.setText(animal.fact);
+                    }
+                    //populate animal name, picture, fun fact
+                } else {
+                    //remove update and delete buttons
+                    Button updateButton = frameLayout.findViewById(R.id.updateAnimalButton);
+                    Button deleteButton = frameLayout.findViewById(R.id.deleteAnimalButton);
+
+                    updateButton.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
                 }
-                //populate animal name, picture, fun fact
-            } else {
-                //remove update and delete buttons
-                Button updateButton = frameLayout.findViewById(R.id.updateAnimalButton);
-                Button deleteButton = frameLayout.findViewById(R.id.deleteAnimalButton);
-
-                updateButton.setVisibility(View.GONE);
-                deleteButton.setVisibility(View.GONE);
             }
+            // Inflate the layout for this fragment
         }
-        // Inflate the layout for this fragment
         return frameLayout;
     }
 
