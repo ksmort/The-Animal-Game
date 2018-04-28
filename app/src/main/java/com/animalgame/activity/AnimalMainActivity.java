@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,9 +15,10 @@ import com.animalgame.animal.Animal;
 import com.animalgame.database.AnimalDatabaseAdapter;
 import com.animalgame.dialogFragment.DeleteAnimalDialogFragment;
 import com.animalgame.dialogFragment.PassDialogFragment;
-import com.animalgame.dialogFragment.SwitchPlayerDialogFragment;
+import com.animalgame.dialogFragment.TimeUpDialogFragment;
 import com.animalgame.fragment.AnimalDatabaseFragment;
 import com.animalgame.fragment.AnimalEditFormFragment;
+import com.animalgame.fragment.SwitchPlayerFragment;
 import com.animalgame.player.Player;
 import com.animalgame.fragment.PlayerFragment;
 import com.animalgame.theanimalgame.AnimalController;
@@ -44,7 +44,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         EndGameFragment.EndGameListener, GoBackToStartScreenDialogFragment.GoBackToStartScreenDialogListener,
         AnimalDatabaseFragment.AnimalDatabaseListener, AnimalEditFormFragment.AnimalEditFormListener,
         DeleteAnimalDialogFragment.DeleteAnimalDialogListener, PassDialogFragment.PassDialogListener,
-        SwitchPlayerDialogFragment.SwitchPlayerDialogListener {
+        TimeUpDialogFragment.TimeUpDialogListener, SwitchPlayerFragment.SwitchPlayerListener {
     private static final String EMPTY_PLAYER_NAME = "";
     private static final String HIGH_SCORE_FILENAME = "HighScores.txt";
     private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least one player.";
@@ -94,12 +94,8 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     }
 
     @Override
-    public void onSwitchPlayerDialogPositiveClick(DialogFragment dialogFragment, boolean pass) {
-        if (pass) {
-            final Button passButton = findViewById(R.id.pass_button);
-            passButton.performClick();
-        }
-        switchPlayers();
+    public void onTimeUpDialogPositiveClick(DialogFragment dialogFragment) {
+        passAndSwitchPlayers();
     }
     @Override
     public void findAnimal(View v) {
@@ -151,6 +147,11 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(this);
         List<HashMap<String, String>> animalList = databaseAdapter.getAnimalList();
         populateAnimalLinearLayout(animalList);
+    }
+
+    @Override
+    public void goToNextPlayer(View v) {
+        switchPlayers();
     }
     //----------------------------------------------------------------------------------------------
     /*Switches to PlayerFragment. */
@@ -285,31 +286,37 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         TextView animalNameTextView = findViewById(R.id.animalName_text);
         String animalTextViewValue = animalNameTextView.getText().toString();
 
-        String animal = animalTextViewValue.toLowerCase().trim();
-        if (!animal.startsWith(String.valueOf(AnimalController.getLetter()).toLowerCase())) {
+        String animalName = animalTextViewValue.toLowerCase().trim();
+        if (!animalName.startsWith(String.valueOf(AnimalController.getLetter()).toLowerCase())) {
             toast = Toast.makeText(this, R.string.invalid_animal_for_letter, Toast.LENGTH_SHORT);
             toast.show();
-        } else if (!databaseAdapter.checkIfAnimalExists(animal)) {
+        } else if (!databaseAdapter.checkIfAnimalExists(animalName)) {
             toast = Toast.makeText(this, R.string.animal_not_found, Toast.LENGTH_SHORT);
             toast.show();
         } else {
-            boolean animalAlreadyPlayed = animalController.checkAnimalAlreadyPlayed(animal);
+            boolean animalAlreadyPlayed = animalController.checkAnimalAlreadyPlayed(animalName);
             if (animalAlreadyPlayed) {
                 toast = Toast.makeText(this, R.string.animal_already_played, Toast.LENGTH_SHORT);
                 toast.show();
             } else {
                 animalController.addPointToCurrentPlayer();
-                animalController.addPlayedAnimal(animal);
+                animalController.addPlayedAnimal(animalName);
                 toast = Toast.makeText(this, R.string.animal_found, Toast.LENGTH_SHORT);
                 toast.show();
                 animalController.getGameTimer().cancel();
 
-                SwitchPlayerDialogFragment switchPlayerDialogFragment = new SwitchPlayerDialogFragment();
+                SwitchPlayerFragment switchPlayerFragment = new SwitchPlayerFragment();
                 Bundle args = new Bundle();
-                args.putString("animalName", animal);
-                switchPlayerDialogFragment.setArguments(args);
+                args.putString("animalName", animalName);
+                Animal animal = databaseAdapter.getAnimalByName(animalName);
+                args.putString("funFact", animal.fact);
+                args.putString("pictureFilename", animal.pictureFilename);
+                switchPlayerFragment.setArguments(args);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frag_container, switchPlayerFragment);
+                transaction.commit();
 
-                switchPlayerDialogFragment.show(getFragmentManager(), "SwitchPlayerDialogFragment");
+
 
                 //switchPlayers();
             }
@@ -328,6 +335,10 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
 
     @Override
     public void passDialogPositiveClick(DialogFragment dialog) {
+        passAndSwitchPlayers();
+    }
+
+    private void passAndSwitchPlayers() {
         animalController.passPlayer();
         animalController.getGameTimer().cancel();
         switchPlayers();

@@ -3,12 +3,11 @@ package com.animalgame.timer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.animalgame.dialogFragment.SwitchPlayerDialogFragment;
+import com.animalgame.dialogFragment.TimeUpDialogFragment;
 import com.animalgame.theanimalgame.R;
 
 public class TimerFactory {
@@ -20,17 +19,19 @@ public class TimerFactory {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                countdownTextView.setText(String.valueOf(millisUntilFinished / countDownInterval));
+                long timeLeft = 0;
+                if (millisUntilFinished > 0) {
+                    timeLeft = millisUntilFinished / countDownInterval;
+                }
+                countdownTextView.setText(String.valueOf(timeLeft));
             }
             @Override
             public void onFinish() {
                 Toast.makeText(activity, TIME_UP_MESSAGE, Toast.LENGTH_SHORT).show();
-
-                SwitchPlayerDialogFragment switchPlayerDialogFragment = new SwitchPlayerDialogFragment();
+                countdownTextView.setText("0");
+                TimeUpDialogFragment timeUpDialogFragment = new TimeUpDialogFragment();
                 Bundle args = new Bundle();
-                args.putString("pass", "true");
-                switchPlayerDialogFragment.setArguments(args);
-                switchPlayerDialogFragment.show(activity.getFragmentManager(), "SwitchPlayerDialogFragment");
+                timeUpDialogFragment.show(activity.getFragmentManager(), "SwitchPlayerDialogFragment");
                 //have dialog fragment pop up and say time's up
             }
         };

@@ -81,11 +81,11 @@
         android:id="@+id/pass_button"
         android:layout_gravity="start|top"
         android:layout_marginTop="80dp"
+        android:layout_marginStart="10sp"
         android:layout_marginLeft="10sp"
         android:onClick="pass"
         android:background="@mipmap/button_animal"
         android:textSize="20sp"
-        android:layout_weight="0.05"
         android:textColor="#ff1f00ff" />
 
     <TextView
@@ -164,7 +164,7 @@
         android:layout_marginBottom="130dp"
         android:text="@string/played_animals_label"
         android:textColor="#ff1f00ff"
-        android:textSize="14dp" />
+        android:textSize="14sp" />
 
 
 </FrameLayout>
