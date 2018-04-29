@@ -1,12 +1,23 @@
 package com.animalgame.activity;
 
+import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +50,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import static com.animalgame.picture.PictureManager.SELECT_PHOTO;
+
 
 public class AnimalMainActivity extends FragmentActivity implements StartFragment.StartListener, PlayerFragment.PlayerListener,
         EndGameFragment.EndGameListener, GoBackToStartScreenDialogFragment.GoBackToStartScreenDialogListener,
@@ -51,14 +64,14 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     private static final int FIRST_PLAYER_INDEX = 0;
     private static final int NO_LETTERS = 0;
     private static final int TEXT_SIZE = 20;
+    private static final String TAG = "AnimalMainActivity";
     private AnimalController animalController;
-    AnimalDatabaseAdapter databaseAdapter;
+    private AnimalDatabaseAdapter databaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         animalController = new AnimalController();
-
         setContentView(R.layout.activity_animal_main);
 
         databaseAdapter = new AnimalDatabaseAdapter(this);
@@ -152,6 +165,47 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     @Override
     public void goToNextPlayer(View v) {
         switchPlayers();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // Here we need to check if the activity that was triggers was the Image Gallery.
+            // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
+            // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
+            if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK && data != null) {
+                // Let's read picked image data - its URI
+                Uri pickedImage = data.getData();
+                // Let's read picked image path using content resolver
+                String[] filePath = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
+                cursor.moveToFirst();
+                String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+
+                    int imageViewId = AnimalController.getAnimalImageViewId();
+                    if (imageViewId > 0) {
+                        ImageView imageView = findViewById(imageViewId);
+                        imageView.setImageBitmap(bitmap);
+                        AnimalController.setImagePathname(imagePath);
+                    }
+                    // Permission is not granted
+                } else {
+                    Log.e(TAG, "Permission denied to access phone storage.");
+                }
+
+                // At the end remember to close the cursor or you will end with the RuntimeException!
+                cursor.close();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
     //----------------------------------------------------------------------------------------------
     /*Switches to PlayerFragment. */
@@ -398,8 +452,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         EditText animalNameEditText = findViewById(R.id.animalNameEditText);
         animal.animalName = animalNameEditText.getText().toString();
 
-        //ImageView animalImageView = findViewById(R.id.animalImageView);
-        animal.pictureFilename = "picture filename";
+        animal.pictureFilename = AnimalController.getImagePathname();
 
         EditText funFactEditText = findViewById(R.id.funFactEditText);
         animal.fact = funFactEditText.getText().toString();
@@ -418,8 +471,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         animal.animal_ID = Integer.parseInt(animalIdTextView.getText().toString());
         animal.animalName = animalNameEditText.getText().toString();
 
-        //ImageView animalImageView = findViewById(R.id.animalImageView);
-        animal.pictureFilename = "picture filename";
+        animal.pictureFilename = AnimalController.getImagePathname();
 
         EditText funFactEditText = findViewById(R.id.funFactEditText);
         animal.fact = funFactEditText.getText().toString();

@@ -1,5 +1,6 @@
 package com.animalgame.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,9 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.animalgame.picture.PictureManager;
 import com.animalgame.theanimalgame.R;
 public class SwitchPlayerFragment extends Fragment {
 
@@ -45,7 +48,7 @@ public class SwitchPlayerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Activity activity = getActivity();
         LinearLayout gameLayout = (LinearLayout) inflater.inflate(R.layout.fragment_switch_player, container, false);
 
         Bundle b = getArguments();
@@ -60,15 +63,21 @@ public class SwitchPlayerFragment extends Fragment {
 
             TextView playedAnimalTextView = gameLayout.findViewById(R.id.playedAnimalTextView);
             TextView funFactTextView = gameLayout.findViewById(R.id.funFactTextView);
+            ImageView playedAnimalImageView = gameLayout.findViewById(R.id.playedAnimalImageView);
 
-            if (animalName != null && animalName.isEmpty()) {
+            if (animalName != null && !animalName.isEmpty()) {
                 playedAnimalTextView.setText(animalName);
             }
-            if (funFact != null && funFact.isEmpty()) {
+            if (funFact != null && !funFact.isEmpty()) {
                 funFactTextView.setText(funFact);
             }
 
+            if (playedAnimalImageView != null) {
+                PictureManager.setImageViewBitmap(gameLayout, pictureFilename, R.id.playedAnimalImageView);
+            }
         }
+
+
         return gameLayout;
     }
 }

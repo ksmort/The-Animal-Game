@@ -1,5 +1,6 @@
 package com.animalgame.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.animalgame.animal.Animal;
 import com.animalgame.database.AnimalDatabaseAdapter;
+import com.animalgame.picture.PictureManager;
 import com.animalgame.theanimalgame.AnimalController;
 import com.animalgame.theanimalgame.R;
 
@@ -34,9 +37,12 @@ public class AnimalEditFormFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Activity activity = getActivity();
         FrameLayout frameLayout = (FrameLayout) inflater.inflate(R.layout.fragment_animal_edit_form, container, false);
         Bundle b = getArguments();
+
+        AnimalController.setImageViewId(0);
+        AnimalController.setImagePathname("");
 
         TextView animalIdTextView = frameLayout.findViewById(R.id.animalIdTextView);
         EditText animalNameEditText = frameLayout.findViewById(R.id.animalNameEditText);
@@ -59,6 +65,8 @@ public class AnimalEditFormFragment extends Fragment {
             }
         });
 
+        ImageView animalImageView = frameLayout.findViewById(R.id.animalImageView);
+
         if (b != null && b.containsKey("clickEvent")) {
             Object clickEvent = b.get("clickEvent");
             if (clickEvent != null) {
@@ -70,13 +78,15 @@ public class AnimalEditFormFragment extends Fragment {
                     Object animalName = b.get("animalName");
 
                     if (animalName != null) {
+                        String animalNameString = animalName.toString();
                         //get animal from database
                         AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(getActivity());
-                        Animal animal = databaseAdapter.getAnimalByName(animalName.toString());
-
+                        Animal animal = databaseAdapter.getAnimalByName(animalNameString);
+                        PictureManager.setImageViewBitmap(frameLayout, animal.pictureFilename, R.id.animalImageView);
                         animalIdTextView.setText(String.valueOf(animal.animal_ID));
-                        animalNameEditText.setText(animal.animalName);
+                        animalNameEditText.setText(animalNameString);
                         funFactEditText.setText(animal.fact);
+
                     }
                     //populate animal name, picture, fun fact
                 } else {
@@ -87,9 +97,14 @@ public class AnimalEditFormFragment extends Fragment {
                     updateButton.setVisibility(View.GONE);
                     deleteButton.setVisibility(View.GONE);
                 }
+                if (activity != null && animalImageView != null) {
+                    PictureManager.setImageViewListener(activity, animalImageView);
+                }
             }
             // Inflate the layout for this fragment
+
         }
+
         return frameLayout;
     }
 
@@ -108,5 +123,7 @@ public class AnimalEditFormFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         animalEditFormListener = null;
+        AnimalController.setImageViewId(0);
+        AnimalController.setImagePathname("");
     }
 }

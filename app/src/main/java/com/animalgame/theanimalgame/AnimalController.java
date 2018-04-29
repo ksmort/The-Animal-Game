@@ -6,8 +6,10 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.animalgame.picture.PictureManager;
 import com.animalgame.player.Player;
 import com.animalgame.timer.TimerFactory;
 
@@ -33,6 +35,8 @@ public class AnimalController {
     private static int playerIndex;
     private Vector<String> playedAnimals;
     private static Vector<Player> players;
+    private static int animalImageViewId;
+    private static String imagePathname;
 
     public AnimalController() {
         availableLetters = ALL_LETTERS;
@@ -42,8 +46,25 @@ public class AnimalController {
         AnimalController.players = new Vector<>();
         playedAnimals = new Vector<>();
         gameTimer = null;
+        animalImageViewId = 0;
+        imagePathname = "";
     }
 
+    public static void setImageViewId(int imageViewId) {
+        animalImageViewId = imageViewId;
+    }
+
+    public static int getAnimalImageViewId() {
+        return animalImageViewId;
+    }
+
+    public static void setImagePathname(String url) {
+        imagePathname = url;
+    }
+
+    public static String getImagePathname() {
+        return imagePathname;
+    }
     public void resetVariables() {
         AnimalController.players.clear();
         AnimalController.playerIndex = 0;
