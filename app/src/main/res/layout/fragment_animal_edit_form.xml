@@ -22,13 +22,27 @@
             android:textColor="#ff1f00ff"
             android:textSize="20sp" />
 
-        <ImageView
-            android:id="@+id/animalImageView"
-            android:layout_width="match_parent"
-            android:layout_weight="0.50"
-            android:layout_height="0dp"
-            android:contentDescription="@string/default_animal_picture"
-            android:src="@mipmap/no_animal_image" />
+        <FrameLayout
+            android:id="@+id/animalImageFrameLayout"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/animalImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/default_animal_picture"
+                android:src="@mipmap/no_animal_image" />
+
+            <TextView
+                android:id="@+id/animalImageCaptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="@string/choose_image_caption"
+                android:textColor="@color/colorPrimaryDark" />
+        </FrameLayout>
 
         <EditText
             android:id="@+id/funFactEditText"
@@ -46,8 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.10"
-            android:onClick="addAnimal"
             android:background="@mipmap/button_animal"
+            android:onClick="addAnimal"
             android:text="@string/add_animal"
             android:textColor="#ff1f00ff"
             android:textSize="20sp" />

@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -30,6 +31,7 @@ import com.animalgame.dialogFragment.TimeUpDialogFragment;
 import com.animalgame.fragment.AnimalDatabaseFragment;
 import com.animalgame.fragment.AnimalEditFormFragment;
 import com.animalgame.fragment.SwitchPlayerFragment;
+import com.animalgame.picture.PictureManager;
 import com.animalgame.player.Player;
 import com.animalgame.fragment.PlayerFragment;
 import com.animalgame.theanimalgame.AnimalController;
@@ -71,6 +73,8 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE},100);
         animalController = new AnimalController();
         setContentView(R.layout.activity_animal_main);
 
@@ -99,9 +103,11 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         Animal animal = new Animal();
         TextView animalIdTextView = findViewById(R.id.animalIdTextView);
         animal.animal_ID = Integer.parseInt(animalIdTextView.getText().toString());
-
+        String pictureFilename = databaseAdapter.getPictureFilenameById(animal.animal_ID);
         long animalId = databaseAdapter.deleteAnimal(this, animal.animal_ID);
+
         if (animalId > 0) {
+            PictureManager.deleteImage(pictureFilename);
             goToAnimalDatabaseFrag();
         }
     }
@@ -307,8 +313,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         } else {
             name = playerName.getText().toString();
         }
-        Toast toast = Toast.makeText(this, name + " added.", Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(this, name + " added.", Toast.LENGTH_SHORT).show();
 
         animalController.addPlayer(new Player(name, false));
         playerName.setHint("Player " + ++playerNumber);
@@ -334,7 +339,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     //Player Fragment method overrides
     @Override
     public void verify(View v){
-        Toast toast;
         //checks that the animal is valid in the database.  Do a serach that requires log n?
         //If valid. points are added to the player.  If not, then the player is out (pass set to true).
         TextView animalNameTextView = findViewById(R.id.animalName_text);
@@ -342,21 +346,17 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
 
         String animalName = animalTextViewValue.toLowerCase().trim();
         if (!animalName.startsWith(String.valueOf(AnimalController.getLetter()).toLowerCase())) {
-            toast = Toast.makeText(this, R.string.invalid_animal_for_letter, Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(this, R.string.invalid_animal_for_letter, Toast.LENGTH_SHORT).show();
         } else if (!databaseAdapter.checkIfAnimalExists(animalName)) {
-            toast = Toast.makeText(this, R.string.animal_not_found, Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(this, R.string.animal_not_found, Toast.LENGTH_SHORT).show();
         } else {
             boolean animalAlreadyPlayed = animalController.checkAnimalAlreadyPlayed(animalName);
             if (animalAlreadyPlayed) {
-                toast = Toast.makeText(this, R.string.animal_already_played, Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(this, R.string.animal_already_played, Toast.LENGTH_SHORT).show();
             } else {
                 animalController.addPointToCurrentPlayer();
                 animalController.addPlayedAnimal(animalName);
-                toast = Toast.makeText(this, R.string.animal_found, Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(this, R.string.animal_found, Toast.LENGTH_SHORT).show();
                 animalController.getGameTimer().cancel();
 
                 SwitchPlayerFragment switchPlayerFragment = new SwitchPlayerFragment();
@@ -451,14 +451,13 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         Animal animal = new Animal();
         EditText animalNameEditText = findViewById(R.id.animalNameEditText);
         animal.animalName = animalNameEditText.getText().toString();
-
-        animal.pictureFilename = AnimalController.getImagePathname();
-
+        animal.pictureFilename = PictureManager.createImageName(animal.animalName);
         EditText funFactEditText = findViewById(R.id.funFactEditText);
         animal.fact = funFactEditText.getText().toString();
         long animalId = databaseAdapter.addAnimal(this, animal);
 
         if (animalId > 0) {
+            PictureManager.saveImageToDirectory(this, AnimalController.getImagePathname(), animal.pictureFilename);
             goToAnimalDatabaseScreen(v);
         }
     }
@@ -470,13 +469,18 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         TextView animalIdTextView = findViewById(R.id.animalIdTextView);
         animal.animal_ID = Integer.parseInt(animalIdTextView.getText().toString());
         animal.animalName = animalNameEditText.getText().toString();
+        animal.pictureFilename = PictureManager.createImageName(animal.animalName);
 
-        animal.pictureFilename = AnimalController.getImagePathname();
-
+        String previousAnimalName = databaseAdapter.getAnimalNameById(animal.animal_ID);
         EditText funFactEditText = findViewById(R.id.funFactEditText);
         animal.fact = funFactEditText.getText().toString();
         long animalId = databaseAdapter.updateAnimal(this, animal);
         if (animalId > 0) {
+            String previousPathname = AnimalController.getImagePathname();
+            PictureManager.saveImageToDirectory(this, previousPathname, animal.pictureFilename);
+            if (!previousAnimalName.equals(animal.animalName)) {
+                PictureManager.deleteImage(PictureManager.createImageName(previousAnimalName));
+            }
             goToAnimalDatabaseScreen(v);
         }
     }

@@ -71,7 +71,7 @@ public class AnimalDatabaseAdapter {
         if (validateParameter(animalName) && animal.animal_ID > 0) {
             Animal currentAnimal = getAnimalByName(animal.animalName);
             //make sure that name is not already played
-            if (currentAnimal.animal_ID == animal.animal_ID) {
+            if (currentAnimal.animal_ID < 1 || currentAnimal.animal_ID == animal.animal_ID) {
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
 
@@ -193,6 +193,50 @@ public class AnimalDatabaseAdapter {
         return animal;
     }
 
+    public String getAnimalNameById(int animalId) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Animal.KEY_animalName +
+                " FROM " + Animal.TABLE
+                + " WHERE " +
+                Animal.KEY_ID + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{ String.valueOf(animalId) } );
+
+        String animalName = "";
+        if (cursor.moveToFirst()) {
+            do {
+                animalName = cursor.getString(cursor.getColumnIndex(Animal.KEY_animalName));
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return animalName;
+    }
+    public String getPictureFilenameById(int animalId) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Animal.KEY_pictureFilename +
+                " FROM " + Animal.TABLE
+                + " WHERE " +
+                Animal.KEY_ID + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{ String.valueOf(animalId) } );
+
+        String pictureFilename = "";
+        if (cursor.moveToFirst()) {
+            do {
+                pictureFilename = cursor.getString(cursor.getColumnIndex(Animal.KEY_pictureFilename));
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return pictureFilename;
+    }
     public boolean checkIfAnimalExists(String animalName) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  EXISTS (SELECT * FROM " +

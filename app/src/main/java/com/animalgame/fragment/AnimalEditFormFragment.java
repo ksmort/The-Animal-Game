@@ -83,6 +83,7 @@ public class AnimalEditFormFragment extends Fragment {
                         AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(getActivity());
                         Animal animal = databaseAdapter.getAnimalByName(animalNameString);
                         PictureManager.setImageViewBitmap(frameLayout, animal.pictureFilename, R.id.animalImageView);
+                        AnimalController.setImagePathname(animal.pictureFilename);
                         animalIdTextView.setText(String.valueOf(animal.animal_ID));
                         animalNameEditText.setText(animalNameString);
                         funFactEditText.setText(animal.fact);

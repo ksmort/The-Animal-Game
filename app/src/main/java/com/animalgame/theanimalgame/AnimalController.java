@@ -6,10 +6,8 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.animalgame.picture.PictureManager;
 import com.animalgame.player.Player;
 import com.animalgame.timer.TimerFactory;
 
@@ -206,8 +204,7 @@ public class AnimalController {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (Exception e) {
-            Toast toast = Toast.makeText(activity, KEYBOARD_ERROR, Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(activity, KEYBOARD_ERROR, Toast.LENGTH_SHORT).show();
         }
     }
 
