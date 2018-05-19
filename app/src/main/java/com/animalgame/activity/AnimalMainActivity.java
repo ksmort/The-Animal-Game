@@ -471,16 +471,12 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         animal.animalName = animalNameEditText.getText().toString();
         animal.pictureFilename = PictureManager.createImageName(animal.animalName);
 
-        String previousAnimalName = databaseAdapter.getAnimalNameById(animal.animal_ID);
         EditText funFactEditText = findViewById(R.id.funFactEditText);
         animal.fact = funFactEditText.getText().toString();
         long animalId = databaseAdapter.updateAnimal(this, animal);
         if (animalId > 0) {
             String previousPathname = AnimalController.getImagePathname();
             PictureManager.saveImageToDirectory(this, previousPathname, animal.pictureFilename);
-            if (!previousAnimalName.equals(animal.animalName)) {
-                PictureManager.deleteImage(PictureManager.createImageName(previousAnimalName));
-            }
             goToAnimalDatabaseScreen(v);
         }
     }

@@ -77,7 +77,6 @@ public class SwitchPlayerFragment extends Fragment {
             }
         }
 
-
         return gameLayout;
     }
 }

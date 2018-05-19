@@ -12,6 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.animalgame.theanimalgame.AnimalController;
 
 import java.io.File;
@@ -71,71 +73,83 @@ public class PictureManager {
     public static void saveImageToDirectory(Context context, String oldFilename, String newFilename) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
-            try {
 
-                File createDir = new File(ROOT);
-                boolean result = true;
-                if (!createDir.exists()) {
-                    result = createDir.mkdir();
+            File createDir = new File(ROOT);
+            boolean result = true;
+            if (!createDir.exists()) {
+                result = createDir.mkdir();
+            }
+            if (!result) {
+                Log.e(TAG, "Failed to create directory.");
+            }
+            //if old filename is empty then there is no file selected
+            if (!oldFilename.isEmpty()) {
+                if (!oldFilename.equalsIgnoreCase(newFilename)) {
+                    PictureManager.transferFileContents(context, oldFilename, newFilename);
+                } else {
+                    //create temp file so that you create new file but still delete old file
+                    String tempFilename = newFilename + System.currentTimeMillis()/1000;
+                    PictureManager.transferFileContents(context, oldFilename, tempFilename);
+                    PictureManager.transferFileContents(context, tempFilename, newFilename);
                 }
-                if (result == false) {
-                    Log.e(TAG, "Failed to create directory.");
-                }
-                if (!oldFilename.isEmpty() && !oldFilename.equals(newFilename)) {
-
-                    File sourceFile = new File(oldFilename);
-                    File destFile = new File(newFilename);
-
-                    destFile.createNewFile();
-
-                    FileChannel source = null;
-                    FileChannel destination = null;
-
-                    try {
-                        source = new FileInputStream(sourceFile).getChannel();
-                        destination = new FileOutputStream(destFile).getChannel();
-                        destination.transferFrom(source, 0, source.size());
-                    } finally {
-                        if (source != null) {
-                            source.close();
-                        }
-                        if (destination != null) {
-                            destination.close();
-                        }
-                    }
-
-                    //if previous filename is in picture directory, delete it
-                    if (oldFilename.startsWith(ROOT)) {
-                        try {
-                            if (sourceFile.delete()) {
-                                Log.i(TAG, "Deleted file: " + sourceFile.getName());
-                            } else {
-                                Log.e(TAG, "Did not delete file: " + sourceFile.getName());
-                            }
-                        } catch (Exception e) {
-                            Log.e(TAG, e.getMessage());
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
             }
         }
     }
 
     public static void deleteImage(String filename) {
         if (filename != null && !filename.isEmpty()) {
-            try {
-                File file = new File(filename);
-                if (file.delete()) {
-                    Log.i(TAG, "Deleted file: " + filename);
-                } else {
-                    Log.e(TAG, "Did not delete file: " + filename);
-                }
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
+            PictureManager.deleteFile(new File(filename));
+        }
+    }
+    private static void deleteFile(File file) {
+        try {
+            if (file.delete()) {
+                Log.i(TAG, "Deleted file: " + file.getName());
+            } else {
+                Log.e(TAG, "Did not delete file: " + file.getName());
             }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
     }
 
+    private static void transferFileContents(Context context, String oldFilename, String newFilename) {
+        File sourceFile = new File(oldFilename);
+        File destFile = new File(newFilename);
+        //check that there isn't already a file case-insensitive ex. aaaaa.png vs aaAaa.png
+        if (destFile.exists()) {
+            if (destFile.delete()) {
+                destFile = new File(newFilename);
+            }
+        }
+
+        try {
+            if (destFile.createNewFile()) {
+
+                FileChannel source = null;
+                FileChannel destination = null;
+
+                try {
+                    source = new FileInputStream(sourceFile).getChannel();
+                    destination = new FileOutputStream(destFile).getChannel();
+                    destination.transferFrom(source, 0, source.size());
+                } finally {
+                    if (source != null) {
+                        source.close();
+                    }
+                    if (destination != null) {
+                        destination.close();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            Toast.makeText(context, "Failed to transfer file contents.", Toast.LENGTH_SHORT).show();
+        }
+
+        //if previous filename is in picture directory, delete it
+        if (oldFilename.startsWith(ROOT)) {
+            PictureManager.deleteFile(sourceFile);
+        }
+    }
 }
