@@ -71,7 +71,7 @@ public class AnimalController {
     }
 
     //Resets the letters available.  Use when length of string = 0, or reset game has been pressed.
-    private void resetAvailableLetters() {
+    public void resetAvailableLetters() {
         availableLetters = AnimalController.ALL_LETTERS;
     }
 
@@ -103,8 +103,14 @@ public class AnimalController {
         AnimalController.playedLetters = newLetter + " " + AnimalController.playedLetters;
         //remove the char from available letters
         availableLetters = availableLetters.replace(String.valueOf(newLetter), EMPTY_LETTER);
-
     }
+
+    public void setLetter(char letter) {
+        AnimalController.animalLetter = letter;
+        AnimalController.playedLetters = letter + " " + AnimalController.playedLetters;
+        availableLetters = availableLetters.replace(String.valueOf(letter), EMPTY_LETTER);
+    }
+
 
     public void startNewRound() {
         pickLetter();

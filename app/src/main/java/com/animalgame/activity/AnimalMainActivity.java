@@ -30,6 +30,7 @@ import com.animalgame.dialogFragment.PassDialogFragment;
 import com.animalgame.dialogFragment.TimeUpDialogFragment;
 import com.animalgame.fragment.AnimalDatabaseFragment;
 import com.animalgame.fragment.AnimalEditFormFragment;
+import com.animalgame.fragment.ChooseModeFragment;
 import com.animalgame.fragment.SwitchPlayerFragment;
 import com.animalgame.picture.PictureManager;
 import com.animalgame.player.Player;
@@ -59,7 +60,8 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         EndGameFragment.EndGameListener, GoBackToStartScreenDialogFragment.GoBackToStartScreenDialogListener,
         AnimalDatabaseFragment.AnimalDatabaseListener, AnimalEditFormFragment.AnimalEditFormListener,
         DeleteAnimalDialogFragment.DeleteAnimalDialogListener, PassDialogFragment.PassDialogListener,
-        TimeUpDialogFragment.TimeUpDialogListener, SwitchPlayerFragment.SwitchPlayerListener {
+        TimeUpDialogFragment.TimeUpDialogListener, SwitchPlayerFragment.SwitchPlayerListener,
+        ChooseModeFragment.ChooseModeListener {
     private static final String EMPTY_PLAYER_NAME = "";
     private static final String HIGH_SCORE_FILENAME = "HighScores.txt";
     private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least one player.";
@@ -213,6 +215,28 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
             Log.e(TAG, e.getMessage());
         }
     }
+
+    @Override
+    public void setStartLetterAndStartGame(View v) {
+        EditText chooseLetterEditText = findViewById(R.id.chooseLetterEditText);
+        if (chooseLetterEditText != null) {
+            String letter = chooseLetterEditText.getText().toString().toUpperCase();
+            if (!letter.isEmpty() && letter.trim().length() == 1) {
+                //check that letter is valid letter
+                char newLetter = letter.charAt(0);
+                int newLetterValue = (int) newLetter;
+                if ((newLetterValue >= 65 && newLetterValue <= 90)) {
+                    //set letter if valid, otherwise letter will be random
+                    animalController.setLetter(newLetter);
+                }
+            } else {
+                animalController.pickLetter();
+            }
+        } else {
+            animalController.pickLetter();
+        }
+        goToPlayerFrag();
+    }
     //----------------------------------------------------------------------------------------------
     /*Switches to PlayerFragment. */
     private void switchPlayers() {
@@ -271,7 +295,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         StartFragment startFragment = new StartFragment();
         transaction.replace(R.id.frag_container, startFragment);
         transaction.commit();
-        animalController.pickLetter();
     }
 
     // Switches to player fragment
@@ -294,7 +317,10 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
             toast.show();
         }
         else {
-            goToPlayerFrag();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            ChooseModeFragment chooseModeFragment = new ChooseModeFragment();
+            transaction.replace(R.id.frag_container, chooseModeFragment);
+            transaction.commit();
         }
     }
 

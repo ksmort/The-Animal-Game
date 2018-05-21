@@ -56,7 +56,7 @@
     <string name="end_of_turn">End of Turn</string>
     <string name="next_player">Next player!</string>
     <string name="choose_image_caption">Change animal image...</string>
-
+    <string name="choose_letter_start">Input letter to start, or no letter for random letter</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main">MainActivity</string>

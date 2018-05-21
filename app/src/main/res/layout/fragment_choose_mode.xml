@@ -1,0 +1,54 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.animalgame.fragment.ChooseModeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center_horizontal"
+            android:text="@string/choose_letter_start"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/chooseLetterEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text|textPersonName"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@mipmap/button_animal"
+            android:onClick="setStartLetterAndStartGame"
+            android:text="@string/start"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/chooseModeCancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@mipmap/button_animal"
+            android:onClick="goBackToStartScreen"
+            android:text="@string/cancel"
+            android:textColor="#ff1f00ff"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</FrameLayout>

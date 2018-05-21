@@ -22,12 +22,12 @@
         android:layout_marginBottom="50dp">
 
         <TextView
+            android:id="@+id/pointsScroll_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:id="@+id/pointsScroll_text"
-            android:textSize="24sp"
-            android:textColor="#ff1f00ff" />
+            android:textColor="#ff1f00ff"
+            android:textSize="24sp" />
     </ScrollView>
 
     <Button
