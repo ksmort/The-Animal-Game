@@ -305,6 +305,13 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         transaction.commit();
         animalController.setPlayerIndex(FIRST_PLAYER_INDEX);
     }
+
+    private void goToChooseLetterFrag() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ChooseModeFragment chooseModeFragment = new ChooseModeFragment();
+        transaction.replace(R.id.frag_container, chooseModeFragment);
+        transaction.commit();
+    }
     //----------------------------------------------------------------------------------------------
     //StartListener method overrides
     @Override
@@ -317,10 +324,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
             toast.show();
         }
         else {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            ChooseModeFragment chooseModeFragment = new ChooseModeFragment();
-            transaction.replace(R.id.frag_container, chooseModeFragment);
-            transaction.commit();
+            goToChooseLetterFrag();
         }
     }
 
@@ -466,7 +470,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
 
     public void getNextLetter(View v){
         animalController.startNewRound();
-        goToPlayerFrag();
+        goToChooseLetterFrag();
     }
 
     //-------------------------------

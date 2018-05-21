@@ -21,7 +21,6 @@ public class ChooseModeFragment extends Fragment {
     }
     /*Interface StartListener. */
     public interface ChooseModeListener {
-        void goBackToStartScreen(View v);
         void setStartLetterAndStartGame(View v);
     }
     @Override
