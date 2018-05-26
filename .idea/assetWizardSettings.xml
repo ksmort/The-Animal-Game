@@ -24,6 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="paddingPercent" value="-10" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,7 +35,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Kiersten\AndroidStudioProjects\TheAnimalGame\app\images\no_animal.png" />
+                                      <entry key="imageAsset" value="C:\Users\Kiersten\Documents\GPA\Colour My Garden\AnimalLove558x757.png" />
+                                      <entry key="outputName" value="animal_love_background" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -94,6 +96,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

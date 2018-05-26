@@ -32,7 +32,7 @@ public class Player {
 
     //returns to string for player
     public String toString(){
-        return (name+"\t-"+points);
+        return (name+"\t/"+points);
     }
     public boolean getPass(){
         return pass;

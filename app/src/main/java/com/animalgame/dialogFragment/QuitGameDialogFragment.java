@@ -12,7 +12,7 @@ public class QuitGameDialogFragment extends DialogFragment {
     private static final int EXIT_SUCCESS = 0;
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.quit_game_dialog);
         builder.setMessage(R.string.quit_game_message)

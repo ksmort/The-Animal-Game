@@ -2,7 +2,6 @@ package com.animalgame.activity;
 
 import android.Manifest;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -26,35 +25,28 @@ import android.widget.Toast;
 import com.animalgame.animal.Animal;
 import com.animalgame.database.AnimalDatabaseAdapter;
 import com.animalgame.dialogFragment.DeleteAnimalDialogFragment;
+import com.animalgame.dialogFragment.GoBackToStartScreenDialogFragment;
 import com.animalgame.dialogFragment.PassDialogFragment;
+import com.animalgame.dialogFragment.QuitGameDialogFragment;
+import com.animalgame.dialogFragment.RulesDialogFragment;
 import com.animalgame.dialogFragment.TimeUpDialogFragment;
 import com.animalgame.fragment.AnimalDatabaseFragment;
 import com.animalgame.fragment.AnimalEditFormFragment;
 import com.animalgame.fragment.ChooseModeFragment;
+import com.animalgame.fragment.EndGameFragment;
+import com.animalgame.fragment.PlayerFragment;
+import com.animalgame.fragment.StartFragment;
 import com.animalgame.fragment.SwitchPlayerFragment;
 import com.animalgame.picture.PictureManager;
 import com.animalgame.player.Player;
-import com.animalgame.fragment.PlayerFragment;
 import com.animalgame.theanimalgame.AnimalController;
-import com.animalgame.fragment.EndGameFragment;
-import com.animalgame.dialogFragment.GoBackToStartScreenDialogFragment;
-import com.animalgame.dialogFragment.HighScoreDialogFragment;
-import com.animalgame.dialogFragment.QuitGameDialogFragment;
+import com.animalgame.theanimalgame.HighScoreController;
 import com.animalgame.theanimalgame.R;
-import com.animalgame.dialogFragment.RulesDialogFragment;
-import com.animalgame.fragment.StartFragment;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 import static com.animalgame.picture.PictureManager.SELECT_PHOTO;
-
 
 public class AnimalMainActivity extends FragmentActivity implements StartFragment.StartListener, PlayerFragment.PlayerListener,
         EndGameFragment.EndGameListener, GoBackToStartScreenDialogFragment.GoBackToStartScreenDialogListener,
@@ -63,7 +55,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         TimeUpDialogFragment.TimeUpDialogListener, SwitchPlayerFragment.SwitchPlayerListener,
         ChooseModeFragment.ChooseModeListener {
     private static final String EMPTY_PLAYER_NAME = "";
-    private static final String HIGH_SCORE_FILENAME = "HighScores.txt";
     private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least one player.";
     private static final int FIRST_PLAYER_INDEX = 0;
     private static final int NO_LETTERS = 0;
@@ -71,6 +62,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     private static final String TAG = "AnimalMainActivity";
     private AnimalController animalController;
     private AnimalDatabaseAdapter databaseAdapter;
+    private HighScoreController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +70,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE},100);
         animalController = new AnimalController();
+        controller = new HighScoreController();
         setContentView(R.layout.activity_animal_main);
 
         databaseAdapter = new AnimalDatabaseAdapter(this);
@@ -95,6 +88,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     @Override
     public void onGoBackToStartScreenDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
+        controller.updateHighScores(this, AnimalController.getPlayerVector());
         animalController.getGameTimer().cancel();
         animalController.resetPlayedAnimals();
         goToStartGameFrag();
@@ -212,7 +206,8 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
                 cursor.close();
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            Log.getStackTraceString(e);
+            Toast.makeText(this, "Error setting animal image: " +e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -261,22 +256,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
 
     /*Switches to EndGameFragment. */
     private void goToEndGameFrag() {
-        /*int numHighScores = 5;
-        Context c = this.getApplicationContext();
-        try {
-            FileInputStream i_s = openFileInput(HIGH_SCORE_FILENAME);
-            //InputStream i_s = c.getResources().getAssets().open(HIGH_SCORE_FILENAME);
-            //BufferedReader b_r = new BufferedReader(new InputStreamReader(i_s));
-            //addHighScore(numHighScores);
-            if (debug){
-                Toast.makeText(this, "loaded highscores", Toast.LENGTH_SHORT).show();
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }*/
-        //Add high score here
-
         //go to end game fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         EndGameFragment endGameFrag = new EndGameFragment();
@@ -399,10 +378,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frag_container, switchPlayerFragment);
                 transaction.commit();
-
-
-
-                //switchPlayers();
             }
         }
     }
@@ -410,9 +385,6 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     @Override
     public void pass(View v) {
         //sets the pass boolean to true
-//        animalController.passPlayer();
-//        animalController.getGameTimer().cancel();
-//        switchPlayers();
         PassDialogFragment fragment = new PassDialogFragment();
         fragment.show(getFragmentManager(), "PassDialogFragment");
     }
@@ -516,237 +488,9 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         DeleteAnimalDialogFragment deleteAnimalDialogFragment = new DeleteAnimalDialogFragment();
         deleteAnimalDialogFragment.show(getFragmentManager(), "DeleteAnimalDialogFragment");
     }
-
-
-
-    //-------------------------------
-    /*public void addHighScore(int highScoreSlots) {
-        Vector <Player> highScores = new Vector<Player>();
-        Vector <Player> temp = players;
-        int i = 1;
-        int index = 0;
-        int end = players.size();
-        Player top = players.elementAt(0);      //first element
-
-        //read file
-        Context c = this.getApplicationContext();
-        try {
-            String line;
-            File file = new File(c.getFilesDir(), HIGH_SCORE_FILENAME);
-            FileInputStream in = new FileInputStream(file);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-            while ((line = br.readLine())!= null){
-
-                String[] tmpStr = line.split("\\)", 1);
-                //highScores.add(new Player(tmpStr[1]));
-                String[] tempStr = tmpStr[1].split("Score:");
-                int pts = Integer.parseInt(tempStr[1]);
-                highScores.add(new Player(tempStr[0].trim(),pts));
-            }
-        }
-        catch (IOException e){
-                e.printStackTrace();
-        }
-    //put file in vector'
-
-        //compare current win score with other scores
-      //  while (i < end-1) {
-      //  boolean done = false;
-        int highScoreIndex;
-        //while (!done) {
-            index = MainActivity.getBestPlayerScore(temp);  //get best score
-
-            for (int j = 0;i <highScores.size();i++){
-                int tmp_size = temp.size();
-                for (int k = 0;k<tmp_size;k++){
-                    if (temp.elementAt(k).getPoints()>highScores.elementAt(j).getPoints()){
-                        highScores.add(j,temp.elementAt(k));
-                        temp.remove(k);
-                    }
-                }
-            }
-            //highScoreIndex = getIndex(highScores, temp.elementAt(index).getPoints(),0,temp.size()); //get high score index
-            //text += i+1 + ") "+players.elementAt(index).toString()+"\n";
-            //i++;
-            // players.remove(index);
-            //}
-
-           // temp.remove(index);
-        //}
-        //add scores and then rewrite the file
-
-
-        try {
-            File file = new File(c.getFilesDir(), HIGH_SCORE_FILENAME);
-
-            FileOutputStream stream = new FileOutputStream(file);
-            try {
-                String highScoreStr = "";
-                for(int m = 0; m <highScoreSlots;m++){
-                    highScoreStr+=(highScores.elementAt(m).toString()+"\n");
-                }
-                stream.write(highScoreStr.getBytes());
-            }
-            catch(IOException e) {
-                e.printStackTrace();
-            }finally {
-                stream.close();
-            }
-            //OutputStream i_s = c.getResources().getAssets().open(HIGH_SCORE_FILENAME);
-            //InputStream os = c.getResources().getAssets().open(HIGH_SCORE_FILENAME);
-
- *//*           if (highScore.exists()){
-                highScore.delete();
-                highScore.createNewFile();
-                System.out.println("boooooooooooooooooooobs");
-            }*//*
-     *//*            System.out.println("file found");
-            FileOutputStream b_r = openFileOutput(HIGH_SCORE_FILENAME, Context.MODE_PRIVATE); //this is probably wrong
-                        //b_r.write("HIGH SCORES");
-            for (int l = 0;l >highScoreSlots;l++) {
-                b_r.write((highScores.elementAt(l).toString()+"\n").getBytes());
-                b_r.flush();
-            }
-            b_r.close();*//*
-
-        }
-        catch(IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    public static int getBestPlayerScore(Vector <Player> players){
-        int index = 0;
-        Player top = players.elementAt(0);
-        for (int j = 1; j < players.size(); j++) {
-            if (players.elementAt(j).getPoints() > top.getPoints()) {
-                top = players.elementAt(j);
-                index = j;
-            }
-        }
-        // players.remove(index);
-        return index;
-    }
-
     ///TODO: implement high scores
     @Override
     public void displayHighScores(View v) {
-        Vector<Player> highScoresVector = new Vector<>();
-        Vector<Player> temp = new Vector<>();
-        temp.addAll(AnimalController.getPlayerVector());
-        int i = 1;
-        int index = 0;
-
-        //read file
-        Context c = this.getApplicationContext();
-        //Toast toast;
-        String highScores = "";
-        FileOutputStream stream;
-
-        try {
-            //File file = new File(c.getFilesDir(), HIGH_SCORE_FILENAME);
-            //FileOutputStream stream = new FileOutputStream(file);
-
-            //FileInputStream in = new FileInputStream(file);
-            FileInputStream in = c.openFileInput(HIGH_SCORE_FILENAME);
-
-            System.out.println(in.toString());
-            try {
-                BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                System.out.println("022222222222222222");
-
-                String line;
-
-                while ((line = br.readLine()) != null) {
-                    System.out.println("33333333333333333");
-
-                    String[] tmpStr = line.split("\\)", 1);
-                    //highScores.add(new Player(tmpStr[1]));
-                    String[] tempStr = tmpStr[1].split("Score:");
-                    int pts = Integer.parseInt(tempStr[1]);
-                    highScoresVector.add(new Player(tempStr[0].trim(), pts));
-
-                    // int highScoreIndex;
-                    //while (!done) {
-                    //index = MainActivity.getBestPlayerScore(temp);  //get best score
-
-                    // for (int j = 0;i <5;i++){
-
-                    //}
-                }
-                //br.close();
-                stream = c.openFileOutput(HIGH_SCORE_FILENAME, Context.MODE_PRIVATE);
-
-                int tmp_size = temp.size();
-                int highScoresVectorSize = highScoresVector.size();
-                for (int k = 0; k < tmp_size; k++) {
-                    if (highScoresVectorSize < 1) {
-                        System.out.println("6666");
-                        index = AnimalMainActivity.getBestPlayerScore(temp);  //get best score
-                        System.out.println(temp.elementAt(index).toString());
-                        highScoresVector.add(temp.elementAt(index));
-                        temp.remove(index);
-                    } else {
-                        if (temp.elementAt(k).getPoints() > highScoresVector.elementAt(k).getPoints()) {
-                            highScoresVector.add(k, temp.elementAt(k));
-                            temp.remove(k);
-                        }
-                    }
-                }
-                if (highScoresVector.size() < 1) {
-                    highScores = "No high scores";
-                }
-                int max_scores = 5;
-                if (highScoresVector.size() < 5) {
-                    max_scores = highScoresVector.size();
-                } else {
-                    for (int j = 0; j < max_scores; j++) {
-                        highScores += highScoresVector.elementAt(j).toString() + "\n";
-                    }
-                }
-                //System.out.println(highScores);
-                stream.write(highScores.getBytes());
-                stream.flush();
-                stream.close();
-                System.out.println("55555555555555555");
-
-                //in.read(bytes);
-                //highScores+=new String(bytes);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // is = c.getResources().getAssets().open(HIGH_SCORE_FILENAME); //false, do something not assets
-/*            openFileInput(HIGH_SCORE_FILENAME);
-            br = new BufferedReader(new InputStreamReader(is));
-            String line;
-
-            while((line = br.readLine())!=null){
-                highScores+=line +"\n";
-            }
-            br.close();
-            is.close();*/
-            //toast = Toast.makeText(this,reader.readLine(),Toast.LENGTH_LONG);
-            //toast.show();
-
-        } catch (IOException e) {
-            //toast = Toast.makeText(this,"Error loading "+filename,Toast.LENGTH_LONG);
-            //  toast.show();
-            e.printStackTrace();
-            try {
-                Thread.sleep(1000);
-                System.exit(0);
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
-        }
-
-        HighScoreDialogFragment frag = new HighScoreDialogFragment();
-        Bundle args = new Bundle();
-        args.putString("high_score_msg", highScores);
-        frag.setArguments(args);
-        frag.show(getFragmentManager(), "HighScoreFragment");
+        controller.displayHighScores(this);
     }
 }
