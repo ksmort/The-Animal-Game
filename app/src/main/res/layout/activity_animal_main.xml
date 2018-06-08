@@ -1,13 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/animal_love_background_164x315"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:paddingBottom="16dp" tools:context="com.animalgame.activity.AnimalMainActivity"
-    android:background="#ffd0fffa"
-    android:focusableInTouchMode="true"
-    android:focusable="true"
-    android:clickable="true">
+    tools:context="com.animalgame.activity.AnimalMainActivity">
 
     <FrameLayout
         android:id="@+id/frag_container"

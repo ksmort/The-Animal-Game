@@ -1,143 +1,147 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.animalgame.activity.AnimalMainActivity"
-    android:background="#ffd0fffa"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    tools:context="com.animalgame.activity.AnimalMainActivity">
 
     <TextView
-        android:id="@+id/text_title"
+        android:id="@+id/playerNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="86dp"
+        android:layout_gravity="start|bottom"
+        android:layout_marginBottom="100dp"
+        android:shadowColor="#ffff00"
+        android:text="@string/num_of_players"
+        android:textColor="#ffff00"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/addPlayer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="135dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp"
+        android:hint="@string/player_one"
+        android:inputType="text"
+        android:lines="1"
+        android:textColor="#ffff00"
+        android:textColorHighlight="@color/colorAccent"
+        android:textColorHint="#ffd9ff47"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/NumPlayersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:shadowColor="#ffc400"
+        android:text="@string/num_players_text"
+        android:textColor="#ffff00"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/playerNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        android:layout_marginBottom="150dp"
         android:shadowColor="#ff1d009e"
-        android:text="@string/text_title"
-        android:textColor="#ff1f00ff"
-        android:textSize="40sp" />
+        android:text="@string/player_name"
+        android:textColor="#ffff00"
+        android:textSize="24sp" />
 
     <Button
+        android:id="@+id/button_quit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/quit"
-        android:id="@+id/button_quit"
-        android:layout_gravity="center|end"
+        android:layout_gravity="end"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/whale"
         android:onClick="quitGame"
-        android:background="@mipmap/button_animal"
-        android:textSize="20sp"
-        android:textColor="#ff1f00ff"
-        android:paddingLeft="30dp"
-        android:paddingTop="30dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="30dp" />
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="@string/quit"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button_rules"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:background="@mipmap/button_animal"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/rabbit"
         android:onClick="readRules"
-        android:paddingBottom="30dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
         android:text="@string/rules"
-        android:textColor="#ff1f00ff"
+        android:textColor="@android:color/black"
         android:textSize="20sp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start"
         android:id="@+id/button_start"
-        android:layout_gravity="start|center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/tiger"
         android:onClick="startGame"
-        android:background="@mipmap/button_animal"
-        android:textSize="20sp"
-        android:textColor="#ff1f00ff"
-        android:paddingLeft="30dp"
-        android:paddingTop="30dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="30dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/player_name"
-        android:id="@+id/playerNameText"
-        android:layout_gravity="start|bottom"
-        android:textSize="24sp"
-        android:layout_marginBottom="150dp"
-        android:textColor="#ff1f00ff"
-        android:shadowColor="#ff1d009e" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/num_of_players"
-        android:id="@+id/playerNumberText"
-        android:layout_gravity="start|bottom"
-        android:textSize="24sp"
-        android:layout_marginBottom="100dp"
-        android:textColor="#ff1f00ff"
-        android:shadowColor="#ff1d009e" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/NumPlayersText"
-        android:layout_gravity="end|bottom"
-        android:textSize="24sp"
-        android:layout_marginRight="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="100dp"
-        android:text="@string/num_players_text"
-        android:textColor="#ff1f00ff"
-        android:shadowColor="#ff1d009e" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/addPlayer_text"
-        android:layout_gravity="center_horizontal|bottom"
-        android:textSize="24sp"
-        android:layout_marginStart="70dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginBottom="135dp"
-        android:hint="@string/player_one"
-        android:lines="1"
-        android:inputType="text"
-        android:textColor="#ff1f00ff"
-        android:textColorHighlight="#ffd9ff47"
-        android:textColorHint="#ff1f00ff" />
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="@string/start"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_player"
         android:id="@+id/addPlayer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
         android:layout_gravity="bottom|center_horizontal"
+        android:background="@drawable/monkey"
         android:onClick="addPlayer"
-        android:background="@mipmap/button_animal"
-        android:textColor="#ff1f00ff"
-        android:textSize="20sp"
-        android:singleLine="false"
-        android:paddingLeft="30dp"
+        android:padding="0dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="30dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="30dp" />
+        android:singleLine="false"
+        android:text="@string/add_player"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/addAnimalButton"
         android:layout_width="158dp"
         android:layout_height="wrap_content"
-        android:background="@mipmap/button_animal"
+        android:background="@drawable/penguin"
+        android:fadingEdge="horizontal|vertical"
+        android:fadingEdgeLength="20dp"
         android:onClick="goToAnimalDatabaseScreen"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
         android:text="@string/animal_list"
-        android:textColor="#ff1f00ff"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/highScoreButton"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:background="@drawable/elephant"
+        android:onClick="displayHighScores"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="@string/high_scores"
+        android:textColor="@android:color/black"
         android:textSize="20sp" />
 
 </FrameLayout>
