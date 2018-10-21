@@ -59,11 +59,11 @@ public class AnimalDatabaseFragment extends Fragment {
         });
 
         if (animalList.size() > 0) {
+            int animalIndex = 0;
             for (HashMap<String, String> animal : animalList) {
-                TextView animalTextView = new TextView(getActivity());
                 final String animalName = animal.get("name");
-                animalTextView.setText(animalName);
-                animalTextView.setTextSize(TEXT_SIZE);
+
+                TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), animalName, TEXT_SIZE, getResources().getColor(R.color.textBlue), animalIndex, true);
 
                 animalTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -82,6 +82,7 @@ public class AnimalDatabaseFragment extends Fragment {
 
                  });
                 animalListLinearLayout.addView(animalTextView);
+                animalIndex++;
             }
 
         } else {

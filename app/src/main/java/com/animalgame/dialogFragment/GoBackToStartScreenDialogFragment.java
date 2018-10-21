@@ -34,7 +34,7 @@ public class GoBackToStartScreenDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.HighScoreStyle);
         builder.setTitle(R.string.quit_game_dialog);
         builder.setMessage(R.string.quit_game_message)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

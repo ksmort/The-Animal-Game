@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.animalgame.player.Player;
@@ -21,6 +22,7 @@ import com.animalgame.theanimalgame.R;
 //then the player is out.  Else, goes to next player.
 
 public class PlayerFragment extends Fragment {
+    private static final int TEXT_SIZE = 20;
     private final char currentLetter;
     private final Player player;
     PlayerListener playerListener;
@@ -75,19 +77,35 @@ public class PlayerFragment extends Fragment {
         letterTextView.setText(String.valueOf(currentLetter));
         AnimalController.setPlayerCountdownTimer(getActivity(), gameLayout);
 
+        LinearLayout playedAnimalsLinearLayout = gameLayout.findViewById(R.id.playedAnimalsLinearLayout);
         //get the played animal list and add them to the playedAnimalsScrollLayout
-        StringBuilder stringBuilder = new StringBuilder();
 
         if (b != null && b.containsKey("playedAnimals")) {
             String[] playedAnimals = b.getStringArray("playedAnimals");
-            if (playedAnimals != null) {
+
+            if (playedAnimals != null || playedAnimals.length > 0) {
+                int animalIndex = 0;
                 for (String animal : playedAnimals) {
-                    stringBuilder.append(animal);
-                    stringBuilder.append("\n");
+                    TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), animal, TEXT_SIZE, getResources().getColor(R.color.textBlue), animalIndex, false);
+                    playedAnimalsLinearLayout.addView(animalTextView);
+
+                    animalIndex++;
                 }
-                TextView playedAnimalsScrollTextView = gameLayout.findViewById(R.id.playedAnimalsScrollTextView);
-                playedAnimalsScrollTextView.setText(stringBuilder.toString());
             }
+        } else {
+            //TextView animalTextView = new TextView(getActivity());
+            TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), getString(R.string.no_animals_to_display), TEXT_SIZE, getResources().getColor(R.color.textBlue), 0, false);
+            playedAnimalsLinearLayout.addView(animalTextView);
+
+//            animalTextView.setText(R.string.no_animals_to_display);
+//            animalTextView.setTextSize(TEXT_SIZE);
+//            animalTextView.setTextColor(getResources().getColor(R.color.textBlue));
+//
+//            animalTextView.setPadding(0, 5, 0,5);
+//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            params.setMargins(10,10,10,10);
+//            animalTextView.setLayoutParams(params);
+//            playedAnimalsLinearLayout.addView(animalTextView);
         }
 
         //have keyboard hide when click off it

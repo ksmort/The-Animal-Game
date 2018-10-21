@@ -148,7 +148,7 @@ public class HighScoreController {
         return index;
     }
 
-    public String getSortedPlayerList(Vector<Player> players) {
+    public String getSortedPlayerString(Vector<Player> players) {
         Vector<Player> tempPlayers = new Vector<>();
         tempPlayers.addAll(players);
         Collections.sort(tempPlayers, new PlayerScoreComparator());
@@ -165,6 +165,27 @@ public class HighScoreController {
         }
         return builder.toString();
     }
+
+    public Vector<String> getSortedPlayerStringVector(Vector<Player> players) {
+        Vector<Player> tempPlayers = new Vector<>();
+        tempPlayers.addAll(players);
+        Collections.sort(tempPlayers, new PlayerScoreComparator());
+
+        Vector<String> playerStringVector = new Vector<>();
+
+        int index = 1;
+        for (Player tempPlayer : tempPlayers) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(index++);
+            builder.append(BRACKET);
+            builder.append(tempPlayer.getName());
+            builder.append(COLON);
+            builder.append(tempPlayer.getPoints());
+            playerStringVector.add(builder.toString());
+        }
+        return playerStringVector;
+    }
+
     class PlayerScoreComparator implements Comparator<Player>
     {
         // Used for sorting player score in descending order

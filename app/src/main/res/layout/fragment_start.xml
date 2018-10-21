@@ -2,146 +2,183 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:focusableInTouchMode="false"
     tools:context="com.animalgame.activity.AnimalMainActivity">
 
-    <TextView
-        android:id="@+id/playerNumberText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start|bottom"
-        android:layout_marginBottom="100dp"
-        android:shadowColor="#ffff00"
-        android:text="@string/num_of_players"
-        android:textColor="#ffff00"
-        android:textSize="24sp" />
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/addPlayer_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="135dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginStart="70dp"
-        android:hint="@string/player_one"
-        android:inputType="text"
-        android:lines="1"
-        android:textColor="#ffff00"
-        android:textColorHighlight="@color/colorAccent"
-        android:textColorHint="#ffd9ff47"
-        android:textSize="24sp" />
+        <ImageButton
+            android:id="@+id/addAnimalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button"
+            android:onClick="goToAnimalDatabaseScreen"
+            android:paddingBottom="10dp"
+            android:paddingLeft="12.5dp"
+            android:paddingRight="12.5dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_clipboard_list"
+            android:tooltipText="@string/animal_list" />
 
-    <TextView
-        android:id="@+id/NumPlayersText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:shadowColor="#ffc400"
-        android:text="@string/num_players_text"
-        android:textColor="#ffff00"
-        android:textSize="24sp" />
+        <ImageButton
+            android:id="@+id/highScoreButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button"
+            android:onClick="displayHighScores"
+            android:padding="10dp"
+            android:src="@drawable/ic_trophy"
+            android:tooltipText="@string/high_scores" />
 
-    <TextView
-        android:id="@+id/playerNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|bottom"
-        android:layout_marginBottom="150dp"
-        android:shadowColor="#ff1d009e"
-        android:text="@string/player_name"
-        android:textColor="#ffff00"
-        android:textSize="24sp" />
+        <ImageButton
+            android:id="@+id/button_rules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:background="@drawable/button"
+            android:onClick="readRules"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_question"
+            android:tooltipText="@string/rules" />
 
-    <Button
-        android:id="@+id/button_quit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/whale"
-        android:onClick="quitGame"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:text="@string/quit"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/button_rules"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/rabbit"
-        android:onClick="readRules"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:text="@string/rules"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        <ImageButton
+            android:id="@+id/button_quit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/button"
+            android:fadingEdge="none"
+            android:onClick="quitGame"
+            android:padding="8.5dp"
+            android:src="@drawable/ic_arrow_left"
+            android:tooltipText="@string/quit" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/tiger"
-        android:onClick="startGame"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:text="@string/start"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/addPlayer_button"
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="@drawable/monkey"
-        android:onClick="addPlayer"
-        android:padding="0dp"
-        android:paddingBottom="30dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="30dp"
-        android:singleLine="false"
-        android:text="@string/add_player"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_start"
+        android:onClick="startGame"
+        android:padding="15dp"
+        android:text="@string/start"
+        android:textColor="@color/textYellow"
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/addAnimalButton"
-        android:layout_width="158dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/penguin"
-        android:fadingEdge="horizontal|vertical"
-        android:fadingEdgeLength="20dp"
-        android:onClick="goToAnimalDatabaseScreen"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:text="@string/animal_list"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/highScoreButton"
-        android:layout_width="158dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/playerNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:text="@string/player_name"
+                android:textColor="@color/textBlue"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/addPlayer_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/player_one"
+                android:inputType="text"
+                android:lines="1"
+                android:textColor="@color/textBlue"
+                android:textColorHighlight="@color/highlightMauve"
+                android:textColorHint="@color/highlightMauve"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/addPlayer_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:background="@drawable/button"
+                android:onClick="addPlayer"
+                android:padding="10dp"
+                android:src="@drawable/ic_user_plus"
+                android:tooltipText="@string/add_player" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/playerNumberText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="0.5"
+                android:maxLines="1"
+                android:text="@string/num_of_players"
+                android:textColor="@color/textBlue"
+                android:textSize="24sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:id="@+id/NumPlayersText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="100dp"
+                android:layout_weight="0.5"
+                android:text="@string/num_players_text"
+                android:textColor="@color/textBlue"
+                android:textSize="24sp"
+                tools:text="15" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:background="@drawable/elephant"
-        android:onClick="displayHighScores"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:text="@string/high_scores"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="100dp"
+        android:text="@string/text_title"
+        android:textColor="@color/textBlue"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
 </FrameLayout>

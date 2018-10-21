@@ -6,6 +6,8 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.animalgame.player.Player;
@@ -218,6 +220,26 @@ public class AnimalController {
 
     public static String getPlayedLetters() {
         return playedLetters;
+    }
+
+    public static TextView createEvenOddTextView(Activity activity, String text, int textSize, int drawableColourCode, int evenOrOdd, boolean clickable) {
+        int evenDrawableId = clickable ? R.drawable.animal_database_button_even : R.drawable.list_even;
+        int oddDrawableId = clickable ? R.drawable.animal_database_button_odd : R.drawable.list_odd;
+        TextView textView = new TextView(activity);
+        textView.setText(text);
+        textView.setTextSize(textSize);
+        textView.setTextColor(drawableColourCode);
+
+        if (evenOrOdd % 2 == 0) {
+            textView.setBackgroundResource(evenDrawableId);
+        } else {
+            textView.setBackgroundResource(oddDrawableId);
+        }
+        textView.setPadding(0, 5, 0,5);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(10,10,10,10);
+        textView.setLayoutParams(params);
+        return textView;
     }
 
 }

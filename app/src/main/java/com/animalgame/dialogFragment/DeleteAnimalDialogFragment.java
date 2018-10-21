@@ -34,7 +34,7 @@ public class DeleteAnimalDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.HighScoreStyle);
         builder.setTitle(R.string.delete_animal_dialog);
         builder.setMessage(R.string.delete_animal_message)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

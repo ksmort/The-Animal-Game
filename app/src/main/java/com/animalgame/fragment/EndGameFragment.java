@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.animalgame.player.Player;
@@ -25,6 +26,7 @@ import java.util.Vector;
 public class EndGameFragment extends Fragment {
     EndGameListener endGameListener;
     private final Vector<Player> players;
+    private static final int TEXT_SIZE = 20;
 
     public EndGameFragment() {
         endGameListener = null;
@@ -62,10 +64,15 @@ public class EndGameFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         FrameLayout gameLayout = (FrameLayout) inflater.inflate(R.layout.fragment_end_game, container, false);
-
-        TextView pointsScrollTextView = gameLayout.findViewById(R.id.pointsScroll_text);
+        LinearLayout playerScrollViewLinearLayout = gameLayout.findViewById(R.id.playerPointsScrollViewLinearLayout);
         HighScoreController controller = new HighScoreController();
-        pointsScrollTextView.setText(controller.getSortedPlayerList(players));
+        Vector<String> sortedPlayersVector = controller.getSortedPlayerStringVector(players);
+        int playerIndex = 0;
+        for (String playerInfo : sortedPlayersVector) {
+            TextView playerTextView = AnimalController.createEvenOddTextView(getActivity(), playerInfo, TEXT_SIZE, getResources().getColor(R.color.textBlue), playerIndex, false);
+            playerScrollViewLinearLayout.addView(playerTextView);
+            playerIndex++;
+        }
 
         TextView playedLettersTextView = gameLayout.findViewById(R.id.playedLettersTextView);
         playedLettersTextView.setText(AnimalController.getPlayedLetters());

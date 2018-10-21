@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="com.animalgame.fragment.AnimalEditFormFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -9,24 +10,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/button"
+            android:onClick="goToAnimalDatabaseScreen"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_left"
+            android:tooltipText="@string/back" />
 
         <EditText
             android:id="@+id/animalNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.10"
             android:ems="10"
             android:hint="@string/default_animal_name"
             android:inputType="textPersonName"
-            android:textColor="#ff1f00ff"
-            android:textSize="20sp" />
+            android:textColor="@color/textBlue"
+            android:textColorHighlight="@color/highlightMauve"
+            android:textColorHint="@color/evenGray"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <FrameLayout
             android:id="@+id/animalImageFrameLayout"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.5">
 
             <ImageView
                 android:id="@+id/animalImageView"
@@ -37,67 +57,71 @@
 
             <TextView
                 android:id="@+id/animalImageCaptionTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_gravity="bottom|center_horizontal"
                 android:text="@string/choose_image_caption"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/textBlue" />
         </FrameLayout>
 
         <EditText
             android:id="@+id/funFactEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.10"
             android:ems="10"
             android:hint="@string/default_fun_fact"
             android:inputType="textPersonName"
-            android:textColor="#ff1f00ff"
+            android:lines="3"
+            android:minLines="3"
+            android:singleLine="false"
+            android:textColor="@color/textBlue"
+            android:textColorHighlight="@color/highlightMauve"
+            android:textColorHint="@color/evenGray"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/addAnimalButton"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.10"
-            android:background="@mipmap/button_animal"
-            android:onClick="addAnimal"
-            android:text="@string/add_animal"
-            android:textColor="#ff1f00ff"
-            android:textSize="20sp" />
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/updateAnimalButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.10"
-            android:onClick="updateAnimal"
-            android:background="@mipmap/button_animal"
-            android:text="@string/update_animal"
-            android:textColor="#ff1f00ff"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/addAnimalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button"
+                android:onClick="addAnimal"
+                android:text="@string/add_animal"
+                android:textColor="@color/textYellow"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/deleteAnimalButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.10"
-            android:onClick="deleteAnimal"
-            android:background="@mipmap/button_animal"
-            android:text="@string/delete_animal"
-            android:textColor="#ff1f00ff"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/updateAnimalButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button"
+                android:onClick="updateAnimal"
+                android:text="@string/update_animal"
+                android:textColor="@color/textYellow"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.10"
-            android:background="@mipmap/button_animal"
-            android:onClick="goToAnimalDatabaseScreen"
-            android:text="@string/cancel"
-            android:textColor="#ff1f00ff"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/deleteAnimalButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button"
+                android:onClick="deleteAnimal"
+                android:text="@string/delete_animal"
+                android:textColor="@color/textYellow"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView

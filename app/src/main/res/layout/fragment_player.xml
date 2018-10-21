@@ -1,170 +1,235 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.animalgame.activity.AnimalMainActivity"
-    android:background="#ffd0fffa">
+    tools:context="com.animalgame.activity.AnimalMainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/playerName_text"
-        android:layout_gravity="start|top"
-        android:textSize="24sp"
-        android:text="@string/playerName_text"
-        android:textColor="#ff1f00ff" />
-
-    <TextView
-        android:id="@+id/points_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|top"
-        android:layout_marginTop="50dp"
-        android:text="@string/points"
-        android:textColor="#ff1f00ff"
-        android:textSize="24sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/numPoints_text"
-        android:id="@+id/numPoints_text"
-        android:layout_gravity="start|top"
-        android:textSize="24sp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:textColor="#ff1f00ff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/letter_text"
-        android:id="@+id/letter_text"
-        android:layout_gravity="center_horizontal|top"
-        android:textSize="100sp"
-        android:layout_marginTop="100dp"
-        android:textColor="#ff1f00ff" />
-
-    <EditText
-        android:id="@+id/animalName_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20sp"
-        android:hint="@string/animalName_text"
-        android:inputType="text"
-        android:lines="1"
-        android:textColor="#ff1f00ff"
-        android:textColorHighlight="#ffd9ff47"
-        android:textColorHint="#ff1f00ff" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/verify"
-        android:id="@+id/verify_button"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp"
-        android:onClick="verify"
-        android:background="@mipmap/button_animal"
-        android:textSize="20sp"
-        android:textColor="#ff1f00ff"
-        android:paddingLeft="40dp"
-        android:paddingTop="30dp"
-        android:paddingRight="40dp"
-        android:paddingBottom="30dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pass"
-        android:id="@+id/pass_button"
-        android:layout_gravity="start|top"
-        android:layout_marginTop="80dp"
-        android:layout_marginStart="10sp"
-        android:layout_marginLeft="10sp"
-        android:onClick="pass"
-        android:background="@mipmap/button_animal"
-        android:textSize="20sp"
-        android:textColor="#ff1f00ff" />
-
-    <TextView
-        android:id="@+id/countdown_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="100dp"
-        android:textColor="#ff1f00ff"
-        android:textSize="36sp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/back"
-        android:id="@+id/gameScreen_button"
-        android:layout_gravity="end|top"
-        android:onClick="goBackToStartScreen"
-        android:background="@mipmap/button_animal"
-        android:textSize="12sp"
-        android:textColor="#ff1f00ff"
-        android:paddingLeft="30dp"
-        android:paddingTop="20dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="20dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rules"
-        android:id="@+id/playerRules_button"
-        android:layout_gravity="center_horizontal|top"
-        android:onClick="readRules"
-        android:background="@mipmap/button_animal"
-        android:textColor="#ff1f00ff"
-        android:textSize="12sp"
-        android:paddingLeft="30dp"
-        android:paddingTop="20dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="20dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"/>
-
-    <ScrollView
-        android:id="@+id/playedAnimalsScrollView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_gravity="bottom">
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/background"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/playedAnimalsLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:orientation="vertical"
-            android:scrollbars="vertical"
-            android:showDividers="none|beginning|middle|end" >
+            android:layout_gravity="top"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/playedAnimalsScrollTextView"
+                android:id="@+id/playerName_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|top"
+                android:text="@string/playerName_text"
+                android:textColor="@color/textBlue"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/playerRules_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:background="@drawable/button"
+                android:contentDescription="@string/rules"
+                android:onClick="readRules"
+                android:paddingBottom="11.25dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="11.25dp"
+                android:src="@drawable/ic_question"
+                android:tooltipText="@string/rules" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/gameScreen_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:background="@drawable/button"
+                android:contentDescription="@string/back"
+                android:onClick="goBackToStartScreen"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_left"
+                android:tooltipText="@string/back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/points_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|top"
+                android:text="@string/points"
+                android:textColor="@color/textBlue"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/numPoints_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginLeft="60dp"
+                android:text="@string/numPoints_text"
+                android:textColor="@color/textBlue"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/pass_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:background="@drawable/button"
+                android:onClick="pass"
+                android:text="@string/pass"
+                android:textColor="@color/textYellow"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/countdown_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginRight="30dp"
+                android:textColor="@color/textBlue"
+                android:textSize="36sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/letter_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/letter_text"
+                android:textColor="@color/textBlue"
+                android:textSize="100sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/animalName_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_animals_to_display"
-                android:textColor="#336699"
-                android:textSize="18sp" />
+                android:hint="@string/animalName_text"
+                android:inputType="text"
+                android:lines="1"
+                android:textColor="@color/textBlue"
+                android:textColorHighlight="@color/highlightMauve"
+                android:textColorHint="@color/evenGray" />
         </LinearLayout>
-    </ScrollView>
 
-    <TextView
-        android:id="@+id/playedAnimalsTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="130dp"
-        android:text="@string/played_animals_label"
-        android:textColor="#ff1f00ff"
-        android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/verify_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_start"
+                android:onClick="verify"
+                android:padding="15dp"
+                android:text="@string/verify"
+                android:textColor="@color/textYellow"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/playedAnimalsTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:text="@string/played_animals_label"
+                android:textColor="@color/textBlue"
+                android:textSize="20sp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <ScrollView
+                android:id="@+id/playedAnimalsScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/scroll_background">
+
+                <LinearLayout
+                    android:id="@+id/playedAnimalsLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:scrollbars="vertical"
+                    android:showDividers="none|beginning|middle|end">
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </FrameLayout>

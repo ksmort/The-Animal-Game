@@ -16,5 +16,84 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="PinkButton.AlertDialog" parent="Widget.AppCompat.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/textYellow</item>
+        <item name="android:background">@drawable/button_start</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
 
+    <style name="HighScore.ButtonBar.AlertDialog" parent="@android:style/Holo.ButtonBar.AlertDialog">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TextAppearance.HighScore.Title" parent="@android:style/TextAppearance.Holo.DialogWindowTitle">
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/textYellow</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">right</item>
+    </style>
+    <style name="DialogWindowTitle_Holo">
+        <item name="android:textAppearance">@style/TextAppearance.HighScore.Title</item>
+    </style>
+
+    <style name="TextAppearance.HighScore.Medium" parent="@android:style/TextAppearance.Holo.Medium">
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="AlertDialog_AnimalGame">
+        <item name="android:fullDark">@android:color/transparent</item>
+        <item name="android:topDark">@android:color/transparent</item>
+        <item name="android:centerDark">@android:color/transparent</item>
+        <item name="android:bottomDark">@android:color/transparent</item>
+        <item name="android:fullBright">@android:color/transparent</item>
+        <item name="android:topBright">@android:color/transparent</item>
+        <item name="android:centerBright">@android:color/transparent</item>
+        <item name="android:bottomBright">@android:color/transparent</item>
+        <item name="android:bottomMedium">@android:color/transparent</item>
+        <item name="android:centerMedium">@android:color/transparent</item>
+    </style>
+
+    <style name="HighScoreStyle" parent="@android:style/Theme.Holo">
+        <item name="android:windowBackground">@drawable/high_score_dialog</item>
+        <item name="android:alertDialogStyle">@style/AlertDialog_AnimalGame</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+        <item name="android:textAppearanceLarge">@style/DialogWindowTitle_Holo</item>
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle_Holo</item>
+        <item name="android:borderlessButtonStyle">@style/PinkButton.AlertDialog</item>
+        <item name="android:buttonBarStyle">@style/HighScore.ButtonBar.AlertDialog</item>
+        <item name="android:textColorPrimary">@color/textYellow</item>
+        <item name="android:textColorAlertDialogListItem">@color/textYellow</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.HighScore.Medium</item>
+    </style>
+
+    <style name="TextAppearance.Rules.Medium" parent="@android:style/TextAppearance.Holo.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="RulesStyle" parent="@android:style/Theme.Holo">
+        <item name="android:windowBackground">@drawable/high_score_dialog</item>
+        <item name="android:alertDialogStyle">@style/AlertDialog_AnimalGame</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+        <item name="android:textAppearanceLarge">@style/DialogWindowTitle_Holo</item>
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle_Holo</item>
+        <item name="android:borderlessButtonStyle">@style/PinkButton.AlertDialog</item>
+        <item name="android:buttonBarStyle">@style/HighScore.ButtonBar.AlertDialog</item>
+        <item name="android:textColorPrimary">@color/textYellow</item>
+        <item name="android:textColorAlertDialogListItem">@color/textYellow</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Rules.Medium</item>
+    </style>
 </resources>

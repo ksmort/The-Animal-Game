@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="com.animalgame.fragment.ChooseModeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -16,7 +17,7 @@
             android:layout_marginTop="50dp"
             android:gravity="center_horizontal"
             android:text="@string/choose_letter_start"
-            android:textColor="#ff1f00ff"
+            android:textColor="@color/textBlue"
             android:textSize="20sp" />
 
         <EditText
@@ -24,20 +25,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Type letter here"
             android:inputType="text|textPersonName"
-            android:textColor="#ff1f00ff"
-            android:textSize="20sp" />
+            android:textColor="@color/textBlue"
+            android:textColorHighlight="@color/highlightMauve"
+            android:textColorHint="@color/highlightMauve"
+            android:textSize="50sp" />
 
         <Button
             android:id="@+id/startButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@mipmap/button_animal"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/button_start"
             android:onClick="setStartLetterAndStartGame"
+            android:padding="15dp"
+            android:radius="10dp"
             android:text="@string/start"
-            android:textColor="#ff1f00ff"
-            android:textSize="20sp" />
+            android:textColor="@color/textYellow"
+            android:textSize="50sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

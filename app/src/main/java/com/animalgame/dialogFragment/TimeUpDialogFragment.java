@@ -33,7 +33,7 @@ public class TimeUpDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.HighScoreStyle);
         builder.setTitle(R.string.end_of_turn);
 
         builder.setMessage("Time's up!")

@@ -34,7 +34,7 @@ public class PassDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.HighScoreStyle);
         builder.setTitle(R.string.pass_alert_title);
         builder.setMessage(R.string.pass_message)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

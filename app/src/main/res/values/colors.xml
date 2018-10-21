@@ -3,4 +3,22 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#0d006b</color>
     <color name="colorAccent">#ff4081</color>
+    <color name="textYellow">#f9ff97</color>
+    <color name="backgroundBlue">#81d0d0</color>
+    <color name="midBackgroundBlue">#BF81d0d0</color>
+    <color name="muteBackgroundBlue">#4081d0d0</color>
+    <color name="darkBackgroundBlue">#357199</color>
+    <color name="highlightMauve">#9e455b</color>
+    <color name="textBlue">#45579e</color>
+    <color name="oddGray">#f3f3f3</color>
+    <color name="evenGray">#e5e5e5</color>
+    <color name="shadowGray">#40adadad</color>
+    <color name="transparentWhite">#efffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="buttonPurple2">#d8c2ef</color>
+    <color name="buttonPurple">#a73b8c</color>
+    <color name="startPink">#cc47aa</color>
+    <color name="lightStartPink">#ecbce0</color>
+    <color name="darkStartPink">#a73b8c</color>
+    <color name="selectGreen">#60ff21</color>
 </resources>

@@ -3,6 +3,8 @@
     android:id="@+id/switchPlayerLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context="com.animalgame.fragment.SwitchPlayerFragment">
 
@@ -16,8 +18,9 @@
         android:layout_weight="0.2"
         android:gravity="center_vertical"
         android:text="@string/default_animal_name"
-        android:textColor="#ff1f00ff"
-        android:textSize="24sp" />
+        android:textColor="@color/textBlue"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/playedAnimalImageView"
@@ -32,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
         android:text="@string/default_fun_fact"
-        android:textColor="#ff1f00ff"
+        android:textColor="@color/textBlue"
         android:textSize="24sp" />
 
     <Button
@@ -40,10 +43,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_weight="0.1"
-        android:background="@mipmap/button_animal"
+        android:background="@drawable/button"
         android:onClick="goToNextPlayer"
         android:text="@string/next_player"
-        android:textColor="#ff1f00ff"
-        android:textSize="20sp" />
+        android:textColor="@color/textYellow"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 </LinearLayout>
