@@ -1,0 +1,3 @@
+Most of the android code in this project has been deprecated as of API 26... 
+Because it is mainly a hobby project for my own device that is too outdated to have 26, I'm not updating the code.
+That and most of the remainder of the project is to make it look slightly aesthetically appealing.  And add ability to draw own animal.
