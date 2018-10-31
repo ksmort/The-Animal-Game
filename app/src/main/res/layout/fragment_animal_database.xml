@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -28,8 +27,25 @@
                 android:onClick="goToAddAnimalScreen"
                 android:padding="10dp"
                 android:src="@drawable/ic_add_animal"
-                android:text="@string/add_animal"
                 android:tooltipText="@string/add_animal" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/resetAnimalDatabase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:background="@drawable/button"
+                android:onClick="resetAnimalDatabase"
+                android:paddingBottom="14dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="8dp"
+                android:paddingTop="9dp"
+                android:src="@drawable/ic_refresh_database" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -67,6 +83,8 @@
                 android:textColorHighlight="@color/highlightMauve"
                 android:textColorHint="@color/evenGray"
                 android:textSize="20sp"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:textStyle="italic" />
 
             <ImageButton
@@ -106,6 +124,7 @@
                 android:id="@+id/animalListLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:orientation="vertical">
 
             </LinearLayout>

@@ -26,11 +26,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Type letter here"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:inputType="text|textPersonName"
             android:textColor="@color/textBlue"
             android:textColorHighlight="@color/highlightMauve"
-            android:textColorHint="@color/highlightMauve"
-            android:textSize="50sp" />
+            android:textColorHint="@color/oddGray"
+            android:textSize="48sp" />
 
         <Button
             android:id="@+id/startButton"

@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import com.animalgame.dialogFragment.DeleteAnimalDialogFragment;
 import com.animalgame.dialogFragment.GoBackToStartScreenDialogFragment;
 import com.animalgame.dialogFragment.PassDialogFragment;
 import com.animalgame.dialogFragment.QuitGameDialogFragment;
+import com.animalgame.dialogFragment.ResetAnimalDatabaseDialogFragment;
 import com.animalgame.dialogFragment.RulesDialogFragment;
 import com.animalgame.dialogFragment.TimeUpDialogFragment;
 import com.animalgame.fragment.AnimalDatabaseFragment;
@@ -53,7 +55,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         AnimalDatabaseFragment.AnimalDatabaseListener, AnimalEditFormFragment.AnimalEditFormListener,
         DeleteAnimalDialogFragment.DeleteAnimalDialogListener, PassDialogFragment.PassDialogListener,
         TimeUpDialogFragment.TimeUpDialogListener, SwitchPlayerFragment.SwitchPlayerListener,
-        ChooseModeFragment.ChooseModeListener {
+        ChooseModeFragment.ChooseModeListener, ResetAnimalDatabaseDialogFragment.ResetAnimalDatabaseDialogListener {
     private static final String EMPTY_PLAYER_NAME = "";
     private static final String NOT_ENOUGH_PLAYERS_MESSAGE = "Must have at least one player.";
     private static final int FIRST_PLAYER_INDEX = 0;
@@ -114,6 +116,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     }
     @Override
     public void findAnimal(View v) {
+        hideKeyboard(v);
         EditText findAnimalEditText = findViewById(R.id.findAnimalEditText);
         String findAnimalName = findAnimalEditText.getText().toString();
 
@@ -129,7 +132,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
             int animalIndex = 0;
             for (HashMap<String, String> animal : animalList) {
                 final String animalName = animal.get("name");
-                TextView animalTextView = AnimalController.createEvenOddTextView(this, animalName, TEXT_SIZE, getResources().getColor(R.color.textBlue), animalIndex, true);
+                TextView animalTextView = AnimalController.createEvenOddTextView(this, animalName, false, TEXT_SIZE, getResources().getColor(R.color.textBlue), animalIndex, true);
 
                 animalTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -159,9 +162,29 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     }
     @Override
     public void refreshAnimalList(View v) {
+        hideKeyboard(v);
         AnimalDatabaseAdapter databaseAdapter = new AnimalDatabaseAdapter(this);
         List<HashMap<String, String>> animalList = databaseAdapter.getAnimalList();
         populateAnimalLinearLayout(animalList);
+    }
+
+    @Override
+    public void resetAnimalDatabase(View v) {
+        hideKeyboard(v);
+        ResetAnimalDatabaseDialogFragment resetAnimalDatabaseDialogFragment = new ResetAnimalDatabaseDialogFragment();
+        resetAnimalDatabaseDialogFragment.show(this.getFragmentManager(), "ResetAnimalDatabaseDialogFragment");
+    }
+
+    @Override
+    public void onResetAnimalDatabasePositiveClick(DialogFragment dialogFragment) {
+        Toast.makeText(this, R.string.reset_start, Toast.LENGTH_SHORT).show();
+        if (databaseAdapter.resetAnimalDatabase()) {
+            Toast.makeText(this, R.string.reset_pass, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.reset_fail, Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override
@@ -169,6 +192,26 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         switchPlayers();
     }
 
+    @Override
+    public void hideKeyboard(View v) {
+        AnimalController.hideKeyboard(this, v);
+    }
+    @Override
+    public void updateFact(View v) {
+        hideKeyboard(v);
+        TextView animalNameTextView = findViewById(R.id.playedAnimalTextView);
+        EditText funFactEditText = findViewById(R.id.funFactEditText);
+
+        String animalName = animalNameTextView.getText().toString();
+
+        Animal animal = databaseAdapter.getAnimalByName(animalName);
+        if (animal != null) {
+            animal.animal_ID = databaseAdapter.getAnimalByName(animalName).animal_ID;
+            animal.fact = funFactEditText.getText().toString();
+
+            databaseAdapter.updateAnimal(this, animal);
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -311,10 +354,10 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     public void addPlayer(View v){
         //add player to player vector.  Get name and player number.  Clear player name from
         //text box, and increase the player number
+        hideKeyboard(v);
         EditText playerName = findViewById(R.id.addPlayer_text);
         TextView numberOfPlayersTextView = findViewById(R.id.NumPlayersText);
-        int numberOfPlayers = animalController.getPlayerCount();
-        int playerNumber = numberOfPlayers + 1;
+        final int currentPlayer = animalController.getPlayerCount();
 
         String name;
         if (playerName.getText().length() <= NO_LETTERS) {
@@ -322,12 +365,37 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
         } else {
             name = playerName.getText().toString();
         }
-        Toast.makeText(this, name + " added.", Toast.LENGTH_SHORT).show();
-
         animalController.addPlayer(new Player(name, false));
-        playerName.setHint("Player " + ++playerNumber);
+        playerName.setHint("Player " + (currentPlayer + 1));
         playerName.setText(EMPTY_PLAYER_NAME);
-        numberOfPlayersTextView.setText(String.valueOf(++numberOfPlayers));
+        numberOfPlayersTextView.setText(String.valueOf(currentPlayer + 1));
+
+        LinearLayout playerLinearLayout = findViewById(R.id.startPlayersListLinearLayout);
+        if (playerLinearLayout != null) {
+
+            //create edit text
+            final EditText newPlayerEditText = (EditText) AnimalController.createEvenOddTextView(this,
+                    name, true, TEXT_SIZE, getResources().getColor(R.color.textBlue),
+                    currentPlayer, true);
+
+            newPlayerEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    //update player name in player vector
+                    if (!hasFocus) {
+                        hideKeyboard(v);
+                        animalController.setPlayerName(newPlayerEditText.getId(), newPlayerEditText.getText().toString());
+                    }
+                }
+            });
+            playerLinearLayout.addView(newPlayerEditText);
+        }
+        Button startButton = findViewById(R.id.button_start);
+        //make start button visible if it isn't already
+        if (startButton !=null && startButton.getVisibility() != View.VISIBLE) {
+            startButton.setVisibility(View.VISIBLE);
+        }
+        Toast.makeText(this, name + " added.", Toast.LENGTH_SHORT).show();
     }
     //Presses "Quit". Alert pops up to double-check if user really wants to quit game.
     @Override
@@ -339,6 +407,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     //Presses "Rules". DialogFragment pops up with rules.
     @Override
     public void readRules(View v) {
+        hideKeyboard(v);
         RulesDialogFragment frag = new RulesDialogFragment();
         frag.show(getFragmentManager(), "RulesFragment");
     }
@@ -348,6 +417,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     //Player Fragment method overrides
     @Override
     public void verify(View v){
+        hideKeyboard(v);
         //checks that the animal is valid in the database.  Do a serach that requires log n?
         //If valid. points are added to the player.  If not, then the player is out (pass set to true).
         TextView animalNameTextView = findViewById(R.id.animalName_text);
@@ -370,8 +440,8 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
 
                 SwitchPlayerFragment switchPlayerFragment = new SwitchPlayerFragment();
                 Bundle args = new Bundle();
-                args.putString("animalName", animalName);
                 Animal animal = databaseAdapter.getAnimalByName(animalName);
+                args.putString("animalName", animal.animalName);
                 args.putString("funFact", animal.fact);
                 args.putString("pictureFilename", animal.pictureFilename);
                 switchPlayerFragment.setArguments(args);
@@ -385,6 +455,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     @Override
     public void pass(View v) {
         //sets the pass boolean to true
+        hideKeyboard(v);
         PassDialogFragment fragment = new PassDialogFragment();
         fragment.show(getFragmentManager(), "PassDialogFragment");
     }
@@ -491,6 +562,7 @@ public class AnimalMainActivity extends FragmentActivity implements StartFragmen
     ///TODO: implement high scores
     @Override
     public void displayHighScores(View v) {
+        hideKeyboard(v);
         controller.displayHighScores(this);
     }
 }

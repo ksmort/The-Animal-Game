@@ -86,26 +86,15 @@ public class PlayerFragment extends Fragment {
             if (playedAnimals != null || playedAnimals.length > 0) {
                 int animalIndex = 0;
                 for (String animal : playedAnimals) {
-                    TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), animal, TEXT_SIZE, getResources().getColor(R.color.textBlue), animalIndex, false);
+                    TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), animal, false, TEXT_SIZE, getResources().getColor(R.color.textBlue), animalIndex, false);
                     playedAnimalsLinearLayout.addView(animalTextView);
 
                     animalIndex++;
                 }
             }
         } else {
-            //TextView animalTextView = new TextView(getActivity());
-            TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), getString(R.string.no_animals_to_display), TEXT_SIZE, getResources().getColor(R.color.textBlue), 0, false);
+            TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), getString(R.string.no_animals_to_display), false, TEXT_SIZE, getResources().getColor(R.color.textBlue), 0, false);
             playedAnimalsLinearLayout.addView(animalTextView);
-
-//            animalTextView.setText(R.string.no_animals_to_display);
-//            animalTextView.setTextSize(TEXT_SIZE);
-//            animalTextView.setTextColor(getResources().getColor(R.color.textBlue));
-//
-//            animalTextView.setPadding(0, 5, 0,5);
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//            params.setMargins(10,10,10,10);
-//            animalTextView.setLayoutParams(params);
-//            playedAnimalsLinearLayout.addView(animalTextView);
         }
 
         //have keyboard hide when click off it

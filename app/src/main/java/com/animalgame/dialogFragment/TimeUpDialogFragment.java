@@ -34,15 +34,18 @@ public class TimeUpDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.HighScoreStyle);
-        builder.setTitle(R.string.end_of_turn);
-
-        builder.setMessage("Time's up!")
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        timeUpDialogListener.onTimeUpDialogPositiveClick(TimeUpDialogFragment.this);
-                    }
-                });
+        builder.setMessage("Time's up!  Give to next player.")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    timeUpDialogListener.onTimeUpDialogPositiveClick(TimeUpDialogFragment.this);
+                }
+            });
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        timeUpDialogListener.onTimeUpDialogPositiveClick(TimeUpDialogFragment.this);
     }
 }

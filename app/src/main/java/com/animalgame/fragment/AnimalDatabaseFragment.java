@@ -31,6 +31,7 @@ public class AnimalDatabaseFragment extends Fragment {
         void goToStartGameScreen(View v);
         void findAnimal(View v);
         void refreshAnimalList(View v);
+        void resetAnimalDatabase(View v);
     }
     public AnimalDatabaseFragment() {
         // Required empty public constructor
@@ -57,13 +58,15 @@ public class AnimalDatabaseFragment extends Fragment {
                 }
             }
         });
+        findAnimalEditText.setFocusable(false);
+        findAnimalEditText.setFocusableInTouchMode(true);
 
         if (animalList.size() > 0) {
             int animalIndex = 0;
             for (HashMap<String, String> animal : animalList) {
                 final String animalName = animal.get("name");
 
-                TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), animalName, TEXT_SIZE, getResources().getColor(R.color.textBlue), animalIndex, true);
+                TextView animalTextView = AnimalController.createEvenOddTextView(getActivity(), animalName, false, TEXT_SIZE, getResources().getColor(R.color.textBlue), animalIndex, true);
 
                 animalTextView.setOnClickListener(new View.OnClickListener() {
                     @Override

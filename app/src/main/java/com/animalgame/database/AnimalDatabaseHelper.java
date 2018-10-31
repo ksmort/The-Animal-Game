@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.animalgame.animal.Animal;
@@ -21,6 +22,7 @@ public class AnimalDatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 8;
     private static final String FILENAME = "AnimalDatabase.txt";
     private static final String DB_NAME = "animal.db";
+    private static final String TAG = "AnimalDatabaseHelper";
    private final Context mContext;
 
     AnimalDatabaseHelper(Context context ) {
@@ -44,13 +46,20 @@ public class AnimalDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        // Drop older table if existed, all data will be gone!!!
-        db.execSQL("DROP TABLE IF EXISTS " + Animal.TABLE);
+        resetAnimalDatabase(db);
+    }
+
+    public boolean resetAnimalDatabase(SQLiteDatabase db) {
+        try {
+            db.execSQL("DROP TABLE IF EXISTS " + Animal.TABLE);
 
 //        // Create tables again
-        onCreate(db);
-        populateDatabase(db, FILENAME);
-
+            onCreate(db);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     private void populateDatabase(SQLiteDatabase database, String filename) {
@@ -71,6 +80,7 @@ public class AnimalDatabaseHelper extends SQLiteOpenHelper {
             }
             br.close();
         } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
             Toast.makeText(mContext, R.string.load_database_error, Toast.LENGTH_SHORT).show();
         }
     }

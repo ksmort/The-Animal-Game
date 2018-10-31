@@ -14,7 +14,6 @@ public class QuitGameDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.HighScoreStyle);
-        builder.setTitle(R.string.quit_game_dialog);
         builder.setMessage(R.string.quit_game_message)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

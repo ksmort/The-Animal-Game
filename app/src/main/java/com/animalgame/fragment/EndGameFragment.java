@@ -69,7 +69,7 @@ public class EndGameFragment extends Fragment {
         Vector<String> sortedPlayersVector = controller.getSortedPlayerStringVector(players);
         int playerIndex = 0;
         for (String playerInfo : sortedPlayersVector) {
-            TextView playerTextView = AnimalController.createEvenOddTextView(getActivity(), playerInfo, TEXT_SIZE, getResources().getColor(R.color.textBlue), playerIndex, false);
+            TextView playerTextView = AnimalController.createEvenOddTextView(getActivity(), playerInfo, false, TEXT_SIZE, getResources().getColor(R.color.textBlue), playerIndex, false);
             playerScrollViewLinearLayout.addView(playerTextView);
             playerIndex++;
         }

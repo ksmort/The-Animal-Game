@@ -3,7 +3,6 @@
     android:id="@+id/switchPlayerLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
     android:background="@drawable/background"
     android:orientation="vertical"
     tools:context="com.animalgame.fragment.SwitchPlayerFragment">
@@ -15,11 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="0.2"
         android:gravity="center_vertical"
         android:text="@string/default_animal_name"
         android:textColor="@color/textBlue"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <ImageView
@@ -27,26 +25,91 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
-        android:src="@mipmap/no_animal_image" />
+        android:src="@mipmap/no_animal_image"
+        android:contentDescription="Animal Image"/>
 
-    <TextView
-        android:id="@+id/funFactTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.2"
-        android:text="@string/default_fun_fact"
-        android:textColor="@color/textBlue"
-        android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/nextPlayerButton"
+    <EditText
+        android:id="@+id/funFactEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical"
+        android:hint="@string/default_fun_fact"
+        android:lines="1"
+        android:maxLines="2"
+        android:scrollbars="vertical"
+        android:textColor="@color/textBlue"
+        android:textColorHint="@color/evenGray"
+        android:textSize="24sp"
+        android:inputType="textCapSentences"
+        android:singleLine="false"
+        android:imeOptions="actionDone"
+        android:verticalScrollbarPosition="right" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="@drawable/button"
-        android:onClick="goToNextPlayer"
-        android:text="@string/next_player"
-        android:textColor="@color/textYellow"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_weight="0.2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/updateFactButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/button"
+                android:onClick="updateFact"
+                android:padding="10dp"
+                android:text="@string/update_fact"
+                android:textColor="@color/textYellow"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/cancelFunFactButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/button"
+                android:onClick="hideKeyboard"
+                android:padding="10dp"
+                android:text="@string/cancel"
+                android:textColor="@color/textYellow"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/nextPlayerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_start"
+            android:onClick="goToNextPlayer"
+            android:paddingBottom="25dp"
+            android:paddingEnd="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="25dp"
+            android:text="@string/next_player"
+            android:textColor="@color/textYellow"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 </LinearLayout>

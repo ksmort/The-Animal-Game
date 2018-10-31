@@ -8,9 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -72,7 +72,7 @@ public class AnimalEditFormFragment extends Fragment {
             if (clickEvent != null) {
                 if (clickEvent.equals("updateAnimal")) {
                     //remove add button
-                    Button addButton = frameLayout.findViewById(R.id.addAnimalButton);
+                    ImageButton addButton = frameLayout.findViewById(R.id.addAnimalButton);
                     addButton.setVisibility(View.GONE);
 
                     Object animalName = b.get("animalName");
@@ -92,8 +92,8 @@ public class AnimalEditFormFragment extends Fragment {
                     //populate animal name, picture, fun fact
                 } else {
                     //remove update and delete buttons
-                    Button updateButton = frameLayout.findViewById(R.id.updateAnimalButton);
-                    Button deleteButton = frameLayout.findViewById(R.id.deleteAnimalButton);
+                    ImageButton updateButton = frameLayout.findViewById(R.id.updateAnimalButton);
+                    ImageButton deleteButton = frameLayout.findViewById(R.id.deleteAnimalButton);
 
                     updateButton.setVisibility(View.GONE);
                     deleteButton.setVisibility(View.GONE);

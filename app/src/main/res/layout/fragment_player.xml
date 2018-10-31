@@ -7,108 +7,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:background="@drawable/background"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/playerName_text"
-                android:layout_width="wrap_content"
+                android:id="@+id/playedAnimalsTextView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|top"
-                android:text="@string/playerName_text"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:text="@string/played_animals_label"
                 android:textColor="@color/textBlue"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="20sp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/playerRules_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center_horizontal"
-                android:background="@drawable/button"
-                android:contentDescription="@string/rules"
-                android:onClick="readRules"
-                android:paddingBottom="11.25dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="11.25dp"
-                android:src="@drawable/ic_question"
-                android:tooltipText="@string/rules" />
+            <ScrollView
+                android:id="@+id/playedAnimalsScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/scroll_background">
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <LinearLayout
+                    android:id="@+id/playedAnimalsLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:scrollbars="vertical"
+                    android:showDividers="none|beginning|middle|end">
 
-            <ImageButton
-                android:id="@+id/gameScreen_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:background="@drawable/button"
-                android:contentDescription="@string/back"
-                android:onClick="goBackToStartScreen"
-                android:padding="10dp"
-                android:src="@drawable/ic_arrow_left"
-                android:tooltipText="@string/back" />
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/points_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|top"
-                android:text="@string/points"
-                android:textColor="@color/textBlue"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/numPoints_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:layout_marginLeft="60dp"
-                android:text="@string/numPoints_text"
-                android:textColor="@color/textBlue"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/pass_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|start"
+                android:layout_gravity="left|center_vertical|start"
                 android:background="@drawable/button"
                 android:onClick="pass"
                 android:text="@string/pass"
@@ -117,7 +70,7 @@
                 android:textStyle="bold" />
 
             <Space
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
@@ -125,10 +78,27 @@
                 android:id="@+id/countdown_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginRight="30dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:hint="60"
                 android:textColor="@color/textBlue"
                 android:textSize="36sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/verify_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical|end"
+                android:background="@drawable/button_start"
+                android:onClick="verify"
+                android:text="@string/verify"
+                android:textColor="@color/textYellow"
+                android:textSize="20dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -163,70 +133,118 @@
                 android:lines="1"
                 android:textColor="@color/textBlue"
                 android:textColorHighlight="@color/highlightMauve"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:textColorHint="@color/evenGray" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/verify_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/button_start"
-                android:onClick="verify"
-                android:padding="15dp"
-                android:text="@string/verify"
-                android:textColor="@color/textYellow"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/playedAnimalsTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_weight="1"
-                android:text="@string/played_animals_label"
-                android:textColor="@color/textBlue"
-                android:textSize="20sp"
-                android:textStyle="bold|italic" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
 
-            <ScrollView
-                android:id="@+id/playedAnimalsScrollView"
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/scroll_background">
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-                <LinearLayout
-                    android:id="@+id/playedAnimalsLinearLayout"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/playerName_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    android:orientation="vertical"
-                    android:scrollbars="vertical"
-                    android:showDividers="none|beginning|middle|end">
+                    android:layout_gravity="start|top"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:text="@string/playerName_text"
+                    android:textColor="@color/textBlue"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                </LinearLayout>
-            </ScrollView>
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/numPoints_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:text="@string/numPoints_text"
+                    android:textColor="@color/textBlue"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/points_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|top"
+                    android:text="@string/points"
+                    android:textColor="@color/textBlue"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_vertical"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/playerRules_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_vertical|center_horizontal"
+                    android:background="@drawable/button"
+                    android:contentDescription="@string/rules"
+                    android:onClick="readRules"
+                    android:paddingBottom="11.25dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="11.25dp"
+                    android:src="@drawable/ic_question"
+                    android:tooltipText="@string/rules" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-50dp"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/gameScreen_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_vertical|end"
+                    android:background="@drawable/button"
+                    android:contentDescription="@string/back"
+                    android:onClick="goBackToStartScreen"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_left"
+                    android:tooltipText="@string/back" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

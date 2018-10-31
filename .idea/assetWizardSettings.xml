@@ -123,10 +123,10 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="height" value="30" />
-                            <entry key="outputName" value="ic_clipboard_list" />
+                            <entry key="outputName" value="ic_refresh_database" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Kiersten\Desktop\clipboard-list.svg" />
-                            <entry key="width" value="25" />
+                            <entry key="sourceFile" value="C:\Users\Kiersten\Desktop\refresh_database.svg" />
+                            <entry key="width" value="30" />
                           </map>
                         </option>
                       </PersistentState>

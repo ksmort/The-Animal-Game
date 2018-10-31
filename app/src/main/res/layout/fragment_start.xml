@@ -8,68 +8,193 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/addAnimalButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/button"
-            android:onClick="goToAnimalDatabaseScreen"
-            android:paddingBottom="10dp"
-            android:paddingLeft="12.5dp"
-            android:paddingRight="12.5dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/ic_clipboard_list"
-            android:tooltipText="@string/animal_list" />
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/highScoreButton"
-            android:layout_width="wrap_content"
+            <ImageButton
+                android:id="@+id/addAnimalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/button"
+                android:contentDescription="@string/add_animal"
+                android:onClick="goToAnimalDatabaseScreen"
+                android:paddingBottom="10dp"
+                android:paddingLeft="12.5dp"
+                android:paddingRight="12.5dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/ic_clipboard_list" />
+
+            <ImageButton
+                android:id="@+id/highScoreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/button"
+                android:contentDescription="@string/high_scores"
+                android:onClick="displayHighScores"
+                android:padding="10dp"
+                android:src="@drawable/ic_trophy" />
+
+            <ImageButton
+                android:id="@+id/button_rules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:background="@drawable/button"
+                android:contentDescription="@string/rules"
+                android:onClick="readRules"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/ic_question" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/button_quit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/button"
+                android:contentDescription="@string/quit"
+                android:fadingEdge="none"
+                android:onClick="quitGame"
+                android:padding="8.5dp"
+                android:src="@drawable/ic_arrow_left" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/button"
-            android:onClick="displayHighScores"
-            android:padding="10dp"
-            android:src="@drawable/ic_trophy"
-            android:tooltipText="@string/high_scores" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/button_rules"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
-            android:background="@drawable/button"
-            android:onClick="readRules"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/ic_question"
-            android:tooltipText="@string/rules" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_vertical|center_horizontal"
+                android:text="@string/text_title"
+                android:textColor="@color/textBlue"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/button_quit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="@drawable/button"
-            android:fadingEdge="none"
-            android:onClick="quitGame"
-            android:padding="8.5dp"
-            android:src="@drawable/ic_arrow_left"
-            android:tooltipText="@string/quit" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="30dp" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/playerNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:text="@string/player_name"
+                    android:textColor="@color/textBlue"
+                    android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/addPlayer_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/player_one"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:textColor="@color/textBlue"
+                    android:textColorHighlight="@color/highlightMauve"
+                    android:textColorHint="@color/evenGray"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"
+                    android:textSize="24sp" />
+
+                <ImageButton
+                    android:id="@+id/addPlayer_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:background="@drawable/button"
+                    android:contentDescription="@string/add_player"
+                    android:onClick="addPlayer"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_user_plus" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/playersLabelText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_weight="0.5"
+                    android:maxLines="1"
+                    android:text="@string/players"
+                    android:textColor="@color/textBlue"
+                    android:textSize="24sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5" />
+
+                <TextView
+                    android:id="@+id/NumPlayersText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="100dp"
+                    android:layout_weight="0.5"
+                    android:text="@string/num_players_text"
+                    android:textColor="@color/textBlue"
+                    android:textSize="24sp"
+                    tools:text="0" />
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@drawable/scroll_background">
+
+                <LinearLayout
+                    android:id="@+id/startPlayersListLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
 
     <Button
         android:id="@+id/button_start"
@@ -77,108 +202,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="20dp"
-        android:layout_weight="1"
         android:background="@drawable/button_start"
         android:onClick="startGame"
         android:padding="15dp"
         android:text="@string/start"
         android:textColor="@color/textYellow"
         android:textSize="50sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/playerNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|start"
-                android:text="@string/player_name"
-                android:textColor="@color/textBlue"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/addPlayer_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/player_one"
-                android:inputType="text"
-                android:lines="1"
-                android:textColor="@color/textBlue"
-                android:textColorHighlight="@color/highlightMauve"
-                android:textColorHint="@color/highlightMauve"
-                android:textSize="24sp" />
-
-            <ImageButton
-                android:id="@+id/addPlayer_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                android:background="@drawable/button"
-                android:onClick="addPlayer"
-                android:padding="10dp"
-                android:src="@drawable/ic_user_plus"
-                android:tooltipText="@string/add_player" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/playerNumberText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|start"
-                android:layout_weight="0.5"
-                android:maxLines="1"
-                android:text="@string/num_of_players"
-                android:textColor="@color/textBlue"
-                android:textSize="24sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
-
-            <TextView
-                android:id="@+id/NumPlayersText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                android:layout_marginEnd="100dp"
-                android:layout_weight="0.5"
-                android:text="@string/num_players_text"
-                android:textColor="@color/textBlue"
-                android:textSize="24sp"
-                tools:text="15" />
-        </LinearLayout>
-
+        android:textStyle="bold"
+        android:visibility="invisible" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="100dp"
-        android:text="@string/text_title"
-        android:textColor="@color/textBlue"
-        android:textSize="40sp"
-        android:textStyle="bold" />
-
 </FrameLayout>

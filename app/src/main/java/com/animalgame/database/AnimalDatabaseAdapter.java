@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.animalgame.animal.Animal;
 import com.animalgame.theanimalgame.R;
 
+import org.apache.commons.text.WordUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,7 +29,7 @@ public class AnimalDatabaseAdapter {
 
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(Animal.KEY_animalName, animal.animalName);
+            values.put(Animal.KEY_animalName, capitalizeAnimalName(animal.animalName));
             values.put(Animal.KEY_pictureFilename, animal.pictureFilename);
             values.put(Animal.KEY_fact, animal.fact);
 
@@ -76,7 +78,7 @@ public class AnimalDatabaseAdapter {
                 ContentValues values = new ContentValues();
 
                 values.put(Animal.KEY_ID, animal.animal_ID);
-                values.put(Animal.KEY_animalName, animalName);
+                values.put(Animal.KEY_animalName, capitalizeAnimalName(animalName));
                 values.put(Animal.KEY_pictureFilename, animal.pictureFilename);
                 values.put(Animal.KEY_fact, animal.fact);
 
@@ -193,28 +195,28 @@ public class AnimalDatabaseAdapter {
         return animal;
     }
 
-    public String getAnimalNameById(int animalId) {
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        String selectQuery =  "SELECT  " +
-                Animal.KEY_animalName +
-                " FROM " + Animal.TABLE
-                + " WHERE " +
-                Animal.KEY_ID + "=?";// It's a good practice to use parameter ?, instead of concatenate string
-
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{ String.valueOf(animalId) } );
-
-        String animalName = "";
-        if (cursor.moveToFirst()) {
-            do {
-                animalName = cursor.getString(cursor.getColumnIndex(Animal.KEY_animalName));
-
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        return animalName;
-    }
+//    public String getAnimalNameById(int animalId) {
+//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+//        String selectQuery =  "SELECT  " +
+//                Animal.KEY_animalName +
+//                " FROM " + Animal.TABLE
+//                + " WHERE " +
+//                Animal.KEY_ID + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+//
+//        Cursor cursor = db.rawQuery(selectQuery, new String[]{ String.valueOf(animalId) } );
+//
+//        String animalName = "";
+//        if (cursor.moveToFirst()) {
+//            do {
+//                animalName = cursor.getString(cursor.getColumnIndex(Animal.KEY_animalName));
+//
+//            } while (cursor.moveToNext());
+//        }
+//
+//        cursor.close();
+//        db.close();
+//        return animalName;
+//    }
     public String getPictureFilenameById(int animalId) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  " +
@@ -261,6 +263,13 @@ public class AnimalDatabaseAdapter {
         return false;
     }
 
+    public boolean resetAnimalDatabase() {
+        return mDbHelper.resetAnimalDatabase(mDbHelper.getReadableDatabase());
+    }
+    private String capitalizeAnimalName(String animalName) {
+        return WordUtils.capitalizeFully(animalName);
+
+    }
     private boolean validateParameter(String animalName) {
         return !(animalName == null || animalName.isEmpty());
     }

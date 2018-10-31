@@ -3,8 +3,11 @@ package com.animalgame.theanimalgame;
 import android.app.Activity;
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -81,6 +84,10 @@ public class AnimalController {
 
         //otherwise, return player
         return AnimalController.players.get(AnimalController.playerIndex);
+    }
+
+    public void setPlayerName(int playerIndex, String playerName) {
+        players.get(playerIndex).setName(playerName);
     }
 
     public static char getLetter() {
@@ -212,7 +219,9 @@ public class AnimalController {
     public static void hideKeyboard(Activity activity, View view) {
         try {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         } catch (Exception e) {
             Toast.makeText(activity, KEYBOARD_ERROR, Toast.LENGTH_SHORT).show();
         }
@@ -222,15 +231,26 @@ public class AnimalController {
         return playedLetters;
     }
 
-    public static TextView createEvenOddTextView(Activity activity, String text, int textSize, int drawableColourCode, int evenOrOdd, boolean clickable) {
+    public static TextView createEvenOddTextView(Activity activity, String text, boolean isEditText, int textSize, int drawableColourCode, int editTextId, boolean clickable) {
         int evenDrawableId = clickable ? R.drawable.animal_database_button_even : R.drawable.list_even;
         int oddDrawableId = clickable ? R.drawable.animal_database_button_odd : R.drawable.list_odd;
-        TextView textView = new TextView(activity);
+        TextView textView;
+        //if it is an edit text, make an edit text.  Otherwise, make just text view
+        if (isEditText) {
+            textView = new EditText(activity);
+        } else {
+            textView = new TextView(activity);
+        }
         textView.setText(text);
         textView.setTextSize(textSize);
         textView.setTextColor(drawableColourCode);
+        textView.setId(editTextId);
+        textView.setMaxLines(1);
+        textView.setSingleLine(true);
+        textView.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        textView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        if (evenOrOdd % 2 == 0) {
+        if (editTextId % 2 == 0) {
             textView.setBackgroundResource(evenDrawableId);
         } else {
             textView.setBackgroundResource(oddDrawableId);
@@ -241,5 +261,4 @@ public class AnimalController {
         textView.setLayoutParams(params);
         return textView;
     }
-
 }
