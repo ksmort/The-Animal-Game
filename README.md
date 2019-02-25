@@ -1,7 +1,7 @@
 # AG3
 The Animal Game
 
-Still in progress - still working on making the game look pretty.
+Status: Working on UI design.
 
 The Animal Game is a single player/multiplayer game where players take turns typing an animal name for a specific letter.
 Users keep naming animals until all users pass, and then round is over.
