@@ -1,5 +1,4 @@
-# AG3
-The Animal Game
+# The Animal Game
 
 Status: Working on UI design.
 
